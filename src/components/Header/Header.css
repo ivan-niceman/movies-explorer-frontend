@@ -27,19 +27,19 @@
   }
 }
 
-.header__link__movies {
+.header__link-movies {
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
 }
 
-.header__link__save-movies {
+.header__link-save-movies {
   font-size: 14px;
   line-height: 18px;
   margin: 0 0 0 20px;
 }
 
-.header__link__account {
+.header__link-account {
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
@@ -49,7 +49,7 @@
   align-items: center;
 }
 
-.header__link__account::after {
+.header__link-account::after {
   content: "";
   background: url(../../images/icon__account.svg) center no-repeat;
   border-radius: 50px;

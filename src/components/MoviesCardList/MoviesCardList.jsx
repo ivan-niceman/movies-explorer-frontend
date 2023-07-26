@@ -8,7 +8,7 @@ export default function MoviesCardList({ moviesData }) {
 
   return (
     <>
-      <ul className="movies__card__list">
+      <ul className="movies__card-list">
       {moviesData.map((movie) => (
         <MoviesCard
           key={movie.id}
@@ -18,7 +18,7 @@ export default function MoviesCardList({ moviesData }) {
         />
       ))}
       </ul>
-      <button className='button__more-movies'>Ещё</button>
+      <button className='button-more-movies'>Ещё</button>
     </>
   )
 }

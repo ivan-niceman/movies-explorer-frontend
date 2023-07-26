@@ -7,28 +7,34 @@
   height: 100vh;
 }
 
-@media (max-width: 768px) {
-  .ident__login {
-    gap: 155px;
+@media (max-width: 425px) {
+  .ident {
+    max-width: 260px;
     justify-content: center;
   }
 }
 
-@media (max-width: 425px) {
-  .ident__login {
-    max-width: 260px;
-    gap: 40px;
-    justify-content: space-between;
+@media (max-width: 768px) {
+  .ident-login {
+    justify-content: center;
+    transform: translateY(-137px);
   }
 }
 
-.ident__header__logo {
+/* @media (max-width: 425px) {
+  .ident__login {
+    max-width: 260px;
+    justify-content: center;
+  }
+} */
+
+.ident__header-logo {
   display: block;
   margin: 70px 0 40px;
 }
 
 @media (max-width: 425px) {
-  .ident__header__logo {
+  .ident__header-logo {
     margin: 55px auto 50px;
   }
 }
@@ -51,25 +57,31 @@
   flex-direction: column;
 }
 
-.ident__input__label {
+.ident-input-label {
   color: #8b8b8b;
   font-size: 10px;
   padding: 0 0 5px;
 }
 
-.ident__input__label:not(:first-of-type) {
+.ident-input-label:not(:first-of-type) {
   margin: 11px 0 0;
 }
 
-.ident__section__button {
-  margin: 50px 0 70px;
+.login-section-button {
+  transform: translateY(205px);
+}
+@media(max-width: 425px) {
+  .login-section-button {
+    margin: 47px 0 0;
+    transform: translateY(246px);
+  }
 }
 
-@media(max-width: 425px) {
+/* @media(max-width: 425px) {
   .ident__section__button {
     margin: 50px 0 30px;
   }
-}
+} */
 
 .ident__button {
   border-radius: 3px;

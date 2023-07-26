@@ -3,21 +3,21 @@ import React from "react";
 
 export default function MobileNav() {
   React.useEffect(() => {
-    const buttonBurger = document.querySelector(".burger__menu");
-    const menuMobile = document.querySelector(".mobile__menu");
-    const overlayMobile = document.querySelector(".mobile__background");
+    const buttonBurger = document.querySelector(".burger-menu");
+    const menuMobile = document.querySelector(".mobile-menu");
+    const overlayMobile = document.querySelector(".mobile-background");
     const buttonCloseMobileMenu = document.querySelector(
-      ".mobile__close-button"
+      ".mobile-close-button"
     );
 
     function closeMobileMenu(e, elem) {
-      e.classList.remove("mobile__menu_visible");
-      elem.classList.remove("mobile__background_visible");
+      e.classList.remove("mobile-menu_visible");
+      elem.classList.remove("mobile-background_visible");
     }
 
     buttonBurger.addEventListener("click", () => {
-      menuMobile.classList.add("mobile__menu_visible");
-      overlayMobile.classList.add("mobile__background_visible");
+      menuMobile.classList.add("mobile-menu_visible");
+      overlayMobile.classList.add("mobile-background_visible");
     });
 
     buttonCloseMobileMenu.addEventListener("click", () => {
@@ -33,22 +33,22 @@ export default function MobileNav() {
 
   return (
     <>
-      <div className="burger__menu" />
-      <div className="mobile__background" />
-      <div className="mobile__menu">
-        <div className="mobile__close-button" />
-        <nav className="mobile__nav">
-          <Link to="/" className="mobile__link">
+      <div className="burger-menu" />
+      <div className="mobile-background" />
+      <div className="mobile-menu">
+        <div className="mobile-close-button" />
+        <nav className="mobile-nav">
+          <Link to="/" className="mobile-link">
             Главная
           </Link>
-          <Link to="#" className="mobile__link">
+          <Link to="#" className="mobile-link">
             Фильмы
           </Link>
-          <Link to="#" className="mobile__link">
+          <Link to="#" className="mobile-link">
             Сохранённые фильмы
           </Link>
         </nav>
-        <Link to="#" className="footer__mobile__link">
+        <Link to="#" className="footer-mobile-link">
           Аккаунт
         </Link>
       </div>

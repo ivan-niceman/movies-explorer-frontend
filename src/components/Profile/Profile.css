@@ -34,23 +34,23 @@
   max-width: 300px;
 }
 
-.profile__user__form {
+.profile__user-form {
   transform: translateY(124px);
 }
 
-.profile__block__name,
-.profile__block__email {
+.profile__block-name,
+.profile__block-email {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.profile__block__name {
+.profile__block-name {
   border-bottom: 1px solid #424242;
   padding: 0 0 13px;
 }
 
-.profile__user__name,
-.profile__user__email {
+.profile__user-name,
+.profile__user-email {
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
@@ -65,8 +65,8 @@
   width: 100%;
 }
 
-.profile__user__name:focus-visible,
-.profile__user__email:focus-visible {
+.profile__user-name:focus-visible,
+.profile__user-email:focus-visible {
   outline: none;
 }
 

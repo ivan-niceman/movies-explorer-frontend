@@ -4,7 +4,7 @@ import linkLogo from "../../images/link-portfolio.svg";
 
 export default function AboutProject() {
   return (
-    <div className="about-me">
+    <section className="about-me">
       <h2 className="about-me__title title">Студент</h2>
       <div className="about-me__section">
         <span className="about-me__info">
@@ -57,6 +57,6 @@ export default function AboutProject() {
           </Link>
         </li>
       </ul>
-    </div>
+    </section>
   );
 }

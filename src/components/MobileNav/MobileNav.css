@@ -1,5 +1,5 @@
 @media (max-width: 768px) {
-  .burger__menu {
+  .burger-menu {
     display: block;
     background: url(../../images/burger__menu.svg) center no-repeat;
     width: 44px;
@@ -9,13 +9,13 @@
 }
 
 @media (max-width: 320px) {
-  .burger__menu {
+  .burger-menu {
     width: 35px;
     height: 22px;
   }
 }
 
-.mobile__background {
+.mobile-background {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.3);
   width: 100%;
@@ -29,12 +29,12 @@
   transition: .3s;
 }
 
-.mobile__background_visible {
+.mobile-background_visible {
   visibility: visible;
   opacity: 1;
 }
 
-.mobile__menu {
+.mobile-menu {
   background: #202020;
   position: fixed;
   top: 0;
@@ -51,11 +51,11 @@
   transition: .3s;
 }
 
-.mobile__menu_visible {
+.mobile-menu_visible {
   transform: translateX(0);
 }
 
-.mobile__close-button {
+.mobile-close-button {
   background: url(../../images/icon__close-button.svg) center no-repeat;
   width: 22px;
   height: 22px;
@@ -66,13 +66,13 @@
 }
 
 @media(max-width: 320px) {
-  .mobile__close-button {
+  .mobile-close-button {
     top: 19px;
     right: 19px;
   }
 }
 
-.mobile__nav {
+.mobile-nav {
   margin: 159px 0 0;
   display: flex;
     flex-direction: column;
@@ -80,32 +80,32 @@
 }
 
 @media(max-width: 320px) {
-  .mobile__nav {
+  .mobile-nav {
     margin: 144px 0 0;
   }
 }
 
-.mobile__link {
+.mobile-link {
 font-size: 18px;
 font-weight: 500;
 padding: 0 0 9px;
 border-bottom: 1px solid transparent;
 }
-.mobile__link:not(:last-of-type) {
+.mobile-link:not(:last-of-type) {
   margin: 0 0 25px;
 }
 
 @media(max-width: 320px) {
-  .mobile__link:not(:last-of-type) {
+  .mobile-link:not(:last-of-type) {
     margin: 0 0 15px;
   }
 }
 
-.mobile__link:hover {
+.mobile-link:hover {
   border-bottom: 1px solid #fff;
 }
 
-.footer__mobile__link {
+.footer-mobile-link {
   display: flex;
     align-items: center;
   margin: 0 0 92px;
@@ -115,12 +115,12 @@ line-height: 12px;
 }
 
 @media(max-width: 320px) {
-  .footer__mobile__link {
+  .footer-mobile-link {
     margin: 0 0 50px;
   }
 }
 
-.footer__mobile__link::after {
+.footer-mobile-link::after {
   content: "";
   background: url(../../images/icon__account.svg) center no-repeat;
   border-radius: 50px;

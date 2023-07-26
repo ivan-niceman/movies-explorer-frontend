@@ -33,8 +33,8 @@ export default function Register({ registerUser, onChange, buttonText }) {
       case "password":
         setPasswordError(error);
         break;
-        default:
-      break;
+      default:
+        break;
     }
     onChange({
       ...value,
@@ -60,29 +60,30 @@ export default function Register({ registerUser, onChange, buttonText }) {
   // };
 
   return (
-    <div className="ident ident__register">
+    <section className="ident ident-register">
       <div>
         <Link to="/">
           <img
             src={logo}
             alt="логотип"
-            className="ident__header__logo header__logo"
+            className="ident__header-logo header-logo"
           />
         </Link>
 
         <p className="ident__welcome">Добро пожаловать!</p>
         <form onSubmit={handleSubmit} name="register" className="ident__form">
-          <label className="ident__input__label">Имя</label>
+          <label className="ident-input-label">Имя</label>
           <input
             name="name"
             type="name"
             className="input"
             value={formData.name}
             onChange={handleChange}
+            placeholder="Введите имя"
             required
           />
-          <span className="input__error">{nameError}</span>
-          <label className="ident__input__label">E-mail</label>
+          <span className="input-error">{nameError}</span>
+          <label className="ident-input-label">E-mail</label>
           <input
             name="email"
             type="email"
@@ -91,10 +92,11 @@ export default function Register({ registerUser, onChange, buttonText }) {
             onChange={handleChange}
             minLength={2}
             maxLength={30}
+            placeholder="Введите E-mail"
             required
           />
-          <span className="input__error">{emailError}</span>
-          <label className="ident__input__label">Пароль</label>
+          <span className="input-error">{emailError}</span>
+          <label className="ident-input-label">Пароль</label>
           <input
             name="password"
             type="password"
@@ -103,22 +105,23 @@ export default function Register({ registerUser, onChange, buttonText }) {
             onChange={handleChange}
             minLength={2}
             maxLength={30}
+            placeholder="Введите пароль"
             required
           />
-          <span className="input__error">{passwordError}</span>
-          <div className="ident__section__button">
-        <button type="submit" className="ident__button">
-          {buttonText}
-        </button>
-        <p className="ident__pararaph">
-          Уже зарегистрированы?
-          <Link to="/signin" className="ident__link">
-            &nbsp;Войти
-          </Link>
-        </p>
-      </div>
+          <span className="input-error">{passwordError}</span>
+          <div className="register-section-button">
+            <button type="submit" className="ident__button">
+              {buttonText}
+            </button>
+            <p className="ident__pararaph">
+              Уже зарегистрированы?
+              <Link to="/signin" className="ident__link">
+                &nbsp;Войти
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 }

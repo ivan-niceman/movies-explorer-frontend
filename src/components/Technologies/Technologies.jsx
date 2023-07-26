@@ -1,7 +1,7 @@
 export default function Technologies() {
   return (
-    <div className="technologies">
-      <div className="technilogies__width">
+    <section className="technologies">
+      <div className="technilogies-width">
         <h2 className="technologies__title title">Технологии</h2>
       </div>
       <div className="technologies__section">
@@ -20,6 +20,6 @@ export default function Technologies() {
           <li className="technologies__item">mongoDB</li>
         </ul>
       </div>
-    </div>
+    </section>
   );
 }

@@ -78,11 +78,16 @@
   border-bottom: 1px solid #424242;
 }
 
+.input::placeholder {
+  font-size: 11px;
+}
+
 .input:focus-visible {
+  background: #252525;
   outline: none;
 }
 
-.input__error {
+.input-error {
   display: block;
   text-align: left;
   color: #ee3465;

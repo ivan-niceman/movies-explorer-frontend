@@ -112,7 +112,7 @@
     flex-wrap: wrap;
     margin: 83px 60px 0;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
   }
 }
 

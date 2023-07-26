@@ -1,4 +1,4 @@
-.button__more-movies {
+.button-more-movies {
   display: block;
   margin: 60px auto 80px;
   border: none;
@@ -14,13 +14,13 @@
 }
 
 @media(max-width: 768px) {
-  .button__more-movies {
+  .button-more-movies {
     margin: 81px auto 10px;
   }
 }
 
 @media(max-width: 425px) {
-  .button__more-movies {
+  .button-more-movies {
     margin: 70px auto 30px;
     max-width: 240px;
   }

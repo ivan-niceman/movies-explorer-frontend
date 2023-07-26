@@ -1,11 +1,19 @@
 @media(max-width: 768px) {
-  .ident__register {
-    justify-content: center;
-    gap: 85px;
+  .ident-register {
+    transform: translateY(162px);
   }
 }
-@media(max-width: 320px) {
-  .ident__register {
+@media(max-width: 425px) {
+  .ident-register {
     justify-content: space-between;
+    transform: translateY(0);
+  }
+}
+.register-section-button {
+  transform: translateY(135px);
+}
+@media(max-width: 320px) {
+  .register-section-button {
+    transform: translateY(222px);
   }
 }

@@ -9,8 +9,8 @@ export default function SavedMovies({ likedMovies }) {
 
 
   return (
-    <div className="movies">
+    <section className="movies">
       <MoviesCardList likedMovies={likedMoviesData} />
-    </div>
+    </section>
   );
 }

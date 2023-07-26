@@ -48,18 +48,18 @@ function handleKeyDown(e) {
 }
 
   return (
-    <div className="profile">
+    <section className="profile">
       <div className="profile__user">
         <h1 className="profile__welcome">Привет, {name}!</h1>
-        <form name="login" className="profile__user__form">
-          <div className="profile__block__name">
-            <label className="ident__input__label">Имя</label>
+        <form name="login" className="profile__user-form">
+          <div className="profile__block-name">
+            <label className="ident-input-label">Имя</label>
             {isEditingName ? (
               <input
               ref={nameInputRef}
               name="name"
               type="text"
-              className="profile__user__name"
+              className="profile__user-name"
               value={name}
               onChange={handleNameChange}
               onKeyDown={handleKeyDown}
@@ -69,18 +69,19 @@ function handleKeyDown(e) {
               <input
               name="name"
               type="text"
-              className="profile__user__name"
+              className="profile__user-name"
               value={name}
+              required
             />
             )}
           </div>
-            <span className="input__error error__name__message">{nameError}</span>
-          <div className="profile__block__email">
-            <label className="ident__input__label">E-mail</label>
+            <span className="input-error error-name-message">{nameError}</span>
+          <div className="profile__block-email">
+            <label className="ident-input-label">E-mail</label>
               <input
               name="email"
               type="email"
-              className="profile__user__email"
+              className="profile__user-email"
               value={email}
             />
           </div>
@@ -98,6 +99,6 @@ function handleKeyDown(e) {
         )}
         <Link to="/signin" className="profile__logout">Выйти из аккаунта</Link>
       </div>
-    </div>
+    </section>
   );
 }

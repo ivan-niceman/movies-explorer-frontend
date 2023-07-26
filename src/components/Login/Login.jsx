@@ -50,38 +50,40 @@ export default function Login({ loginUser, buttonText }) {
   // };
 
   return (
-    <div className="ident ident__login">
+    <section className="ident ident-login">
       <div>
         <Link to="/">
           <img
             src={logo}
             alt="логотип"
-            className="ident__header__logo header__logo"
+            className="ident__header-logo header-logo"
           />
         </Link>
         <p className="ident__welcome">Рады видеть!</p>
         <form onSubmit={handleSubmit} name="login" className="ident__form">
-          <label className="ident__input__label">E-mail</label>
+          <label className="ident-input-label">E-mail</label>
           <input
             name="email"
             type="email"
             className="input"
             value={formData.email}
             onChange={handleChange}
+            placeholder="Введите E-mail"
             required
           />
-          <span className="input__error">{emailError}</span>
-          <label className="ident__input__label">Пароль</label>
+          <span className="input-error">{emailError}</span>
+          <label className="ident-input-label">Пароль</label>
           <input
             name="password"
             type="password"
             className="input"
             value={formData.password}
             onChange={handleChange}
+            placeholder="Введите пароль"
             required
           />
-          <span className="input__error">{passwordError}</span>
-          <div className="ident__section__button">
+          <span className="input-error">{passwordError}</span>
+          <div className="login-section-button">
             <button type="submit" className="ident__button">
               {buttonText}
             </button>
@@ -94,6 +96,6 @@ export default function Login({ loginUser, buttonText }) {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 }

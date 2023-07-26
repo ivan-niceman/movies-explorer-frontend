@@ -49,8 +49,8 @@ export default function Movies() {
   ];
 
   return (
-    <div className="movies">
+    <section className="movies">
       <MoviesCardList moviesData={moviesData} />
-    </div>
+    </section>
   )
 }

@@ -10,13 +10,13 @@ export default function Header() {
           </Link>
         <MobileNav />
         <nav className="header__nav">
-          <Link to="/movies" className="header__link__movies">
+          <Link to="/movies" className="header__link-movies">
             Фильмы
           </Link>
-          <Link to="/saved-movies" className="header__link__save-movies">
+          <Link to="/saved-movies" className="header__link-save-movies">
             Сохранённые фильмы
           </Link>
-          <Link to="/profile" className="header__link__account">
+          <Link to="/profile" className="header__link-account">
             Аккаунт
           </Link>
         </nav>
