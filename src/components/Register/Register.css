@@ -1,0 +1,11 @@
+@media(max-width: 768px) {
+  .ident__register {
+    justify-content: center;
+    gap: 85px;
+  }
+}
+@media(max-width: 320px) {
+  .ident__register {
+    justify-content: space-between;
+  }
+}

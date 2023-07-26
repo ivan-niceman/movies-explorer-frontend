@@ -1,0 +1,60 @@
+.header {
+  padding: 0 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
+  max-width: 1280px;
+  /* width: 100%; */
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 426px) {
+  .header{
+    padding: 0 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__nav {
+    display: none;
+  }
+}
+
+.header__link__movies {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.header__link__save-movies {
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 0 0 20px;
+}
+
+.header__link__account {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+  margin: 0 0 0 60px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header__link__account::after {
+  content: "";
+  background: url(../../images/icon__account.svg) center no-repeat;
+  border-radius: 50px;
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  margin: 0 0 0 7px;
+}

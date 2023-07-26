@@ -1,0 +1,92 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/inter.css);
+
+@import url(./components/Header/Header.css);
+
+@import url(./components/MobileNav/MobileNav.css);
+
+@import url(./components/Login/Login.css);
+
+@import url(./components/Register/Register.css);
+
+@import url(./components/Promo/Promo.css);
+
+@import url(./components/AboutMe/AboutMe.css);
+
+@import url(./components/AboutProject/AboutProject.css);
+
+@import url(./components/Technologies/Technologies.css);
+
+@import url(./components/Profile/Profile.css);
+
+@import url(./components/Error/Error.css);
+
+@import url(./components/Movies/Movies.css);
+
+@import url(./components/MoviesCard/MoviesCard.css);
+
+@import url(./components/SearchForm/SearchForm.css);
+
+@import url(./components/MoviesCardList/MoviesCardList.css);
+
+@import url(./components/Footer/Footer.css);
+
+@import url(./components/Preloader/Preloader.css);
+
+.page {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  background: #202020;
+  color: #fff;
+  font-family: "Inter", sans-serif, "Times New Roman", Times, serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-rendering: optimizeLegibility;
+}
+
+.title {
+  padding: 0 0 23px;
+  font-size: 22px;
+  letter-spacing: -0.88px;
+  border-bottom: 1px solid #424242;
+  margin: 0 70px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    margin: 0 50px;
+  }
+}
+
+@media (max-width: 426px) {
+  .title {
+    padding: 0 0 30px;
+    margin: 0 18px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid #424242;
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.input__error {
+  display: block;
+  text-align: left;
+  color: #ee3465;
+  font-size: 10px;
+  margin: 3px 0 0;
+  height: 12px;
+}
