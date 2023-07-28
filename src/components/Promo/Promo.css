@@ -8,64 +8,6 @@
   margin: 0 auto;
 }
 
-
-.promo__top {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 0 70px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 74px;
-}
-
-@media (max-width: 768px) {
-  .promo__top {
-    padding: 0 30px;
-  }
-}
-
-@media (max-width: 426px) {
-  .promo__top {
-    padding: 0 14px;
-  }
-}
-
-.promo__logo {
-  width: 38px;
-}
-
-.promo__ident-register {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-}
-
-@media (max-width: 426px) {
-  .promo__ident-register {
-    font-size: 10px;
-  }
-}
-
-.promo__ident-enter {
-  color: #000;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-  padding: 8px 20px;
-  border-radius: 3px;
-  background: #3ddc84;
-  margin: 0 0 0 30px;
-}
-
-@media (max-width: 426px) {
-  .promo__ident-enter {
-    font-size: 10px;
-    padding: 5px 12px;
-    margin: 0 0 0 14px;
-  }
-}
-
 .promo__info {
   display: flex;
   justify-content: space-between;

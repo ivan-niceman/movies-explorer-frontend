@@ -1,24 +1,9 @@
-import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import logo from "../../images/logo.svg";
 import textLogo from "../../images/text-logo.svg";
 
 export default function Promo() {
   return (
-    <header className="promo">
-      <div className="promo__top">
-        <Link to="/">
-          <img src={logo} alt="логотип" className="promo__logo" />
-        </Link>
-        <span className="promo__enter">
-          <Link to="/signup" className="promo__ident-register">
-            Регистрация
-          </Link>
-          <Link to="/signin" className="promo__ident-enter">
-            Войти
-          </Link>
-        </span>
-      </div>
+    <section className="promo">
       <div className="promo__block">
         <div className="promo__info">
           <span className="promo__info-left">
@@ -42,6 +27,6 @@ export default function Promo() {
           <img src={textLogo} className="promo__info-text-logo" />
         </div>
       </div>
-    </header>
+    </section>
   );
 }

@@ -60,6 +60,7 @@ export default function App() {
           path="/"
           element={
             <>
+              <Header />
               <Main />
               <Footer />
             </>
