@@ -1,0 +1,154 @@
+.about-project {
+  max-width: 1280px;
+  margin: 110px auto 0;
+  padding: 0 0 110px;
+}
+
+@media (max-width: 768px) {
+  .about-project {
+    padding: 0 0 90px;
+    margin: 89px auto 0;
+  }
+}
+
+@media (max-width: 426px) {
+  .about-project {
+    padding: 0 0 70px;
+    margin: 67px auto 0;
+  }
+}
+.about-project__title {
+  margin: 0 70px;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .about-project__title {
+    margin: 0 50px;
+  }
+}
+
+@media (max-width: 426px) {
+  .about-project__title {
+    margin: 0 18px;
+  }
+}
+
+.about-project__diploma {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin: 70px 70px 0;
+}
+
+@media (max-width: 768px) {
+  .about-project__diploma {
+    gap: 30px;
+    margin: 70px 50px 0;
+  }
+}
+
+@media (max-width: 426px) {
+  .about-project__diploma {
+    width: 300px;
+    gap: 56px;
+    margin: 60px 18px 0;
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-project__diploma-subtitle {
+  font-size: 20px;
+  line-height: normal;
+  font-weight: 400;
+  letter-spacing: -0.8px;
+  margin: 0 0 25px;
+}
+
+@media (max-width: 426px) {
+  .about-project__diploma-subtitle {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    margin: 0 0 16px;
+  }
+}
+
+.about-project__diploma-paragraph {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .about-project__diploma-paragraph {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 426px) {
+  .about-project__diploma-paragraph {
+    font-size: 11px;
+  }
+}
+
+.about-project__diploma-deadline {
+  margin: 110px 70px 0;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .about-project__diploma-deadline {
+    margin: 97px 50px 0;
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media (max-width: 426px) {
+  .about-project__diploma-deadline {
+    margin: 60px 18px 0;
+    grid-template-columns: 100px 184px;
+  }
+}
+
+.about-project__diploma-time-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  font-size: 14px;
+}
+
+@media (max-width: 426px) {
+  .about-project__diploma-time-progress {
+    font-size: 11px;
+  }
+}
+
+.about-project__diploma-time-backend {
+  background: #3ddc84;
+  color: #000;
+}
+
+.about-project__diploma-time-frontend {
+  background: #303030;
+}
+
+.about-project__diploma-time-paragraph {
+  color: #8b8b8b;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  margin: 14px 0 0;
+}
+
+@media (max-width: 426px) {
+  .about-project__diploma-time-paragraph {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: normal;
+    margin: 10px 0 0;
+  }
+}

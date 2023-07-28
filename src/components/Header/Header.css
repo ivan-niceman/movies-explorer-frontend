@@ -1,0 +1,121 @@
+.header {
+  padding: 0 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
+  max-width: 1280px;
+  /* width: 100%; */
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 426px) {
+  .header{
+    padding: 0 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__nav {
+    display: none;
+  }
+}
+
+.header__link-movies {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.header__link-save-movies {
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 0 0 20px;
+}
+
+.header__link-account {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+  margin: 0 0 0 60px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header__link-account::after {
+  content: "";
+  background: url(../../images/icon__account.svg) center no-repeat;
+  border-radius: 50px;
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  margin: 0 0 0 7px;
+}
+
+.header-promo {
+  background: #073042;
+}
+
+.header-promo-top {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
+}
+
+@media (max-width: 768px) {
+  .header-promo-top {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 426px) {
+  .header-promo-top {
+    padding: 0 14px;
+  }
+}
+
+.header-promo-logo {
+  width: 38px;
+}
+
+.header-promo-ident-register {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+@media (max-width: 426px) {
+  .header-promo-ident-register {
+    font-size: 10px;
+  }
+}
+
+.header-promo-ident-enter {
+  color: #000;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 8px 20px;
+  border-radius: 3px;
+  background: #3ddc84;
+  margin: 0 0 0 30px;
+}
+
+@media (max-width: 426px) {
+  .header-promo-ident-enter {
+    font-size: 10px;
+    padding: 5px 12px;
+    margin: 0 0 0 14px;
+  }
+}
