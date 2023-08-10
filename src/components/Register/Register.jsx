@@ -1,10 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import ValidateError from "../../utils/ValidateError/ValidateError";
 import { emailRegExp } from '../../utils/constants';
 import useForm from '../../hooks/useForm'
-// import { register } from "../../utils/auth";
 
 export default function Register({ registerUser, buttonText, error, cleaner }) {
   const [buttonStatus, setButtonStatus] = React.useState(true);

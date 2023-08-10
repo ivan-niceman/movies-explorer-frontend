@@ -14,7 +14,9 @@ class MoviesApi {
   _getJson(res) {
     if (res.ok) {
       return res.json()
-    } else Promise.reject(`Ошибка: ${res.status}`);
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`)
+    };
   }
 
   _request(url, options) {

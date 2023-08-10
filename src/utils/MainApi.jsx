@@ -72,9 +72,9 @@ class Api {
       duration: item.duration,
       year: item.year,
       description: item.description,
-      image: `https://api.nomoreparties.co/${item.image.url}`,
+      image: `https://api.nomoreparties.co${item.image.url}`,
       trailerLink: item.trailerLink,
-      thumbnail: `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`,
+      thumbnail: `https://api.nomoreparties.co${item.image.formats.thumbnail.url}`,
       movieId: item.id,
       nameRU: item.nameRU,
       nameEN: item.nameEN
