@@ -139,7 +139,7 @@ export default function App() {
               path="/signin"
               element={
                 <Login
-                  onLogin={handlerLogIn}
+                  loginUser={handlerLogIn}
                   error={loginError}
                   buttonText={isLoading ? "Войти..." : "Войти"}
                   cleaner={cleanFormMasseges}
