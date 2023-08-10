@@ -1,53 +1,30 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import logo from "../../images/logo.svg";
-import ValidateError from "../../utils/ValidateError/ValidateError";
-// import { authorize } from "../../utils/auth";
+import { emailRegExp } from '../../utils/constants';
+import useForm from '../../hooks/useForm';
 
-export default function Login({ loginUser, buttonText }) {
-  const [formData, setFormData] = React.useState({
-    email: "",
-    password: "",
-  });
+export default function Login({ loginUser, buttonText, error, cleaner }) {
+  const [buttonStatus, setButtonStatus] = React.useState(true);
+  const { form, handleChange, errors } = useForm({
+    email: '',
+    password: ''
+  })
 
-  // const [nameError, setNameError] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState("");
+  React.useEffect(() => {
+    cleaner();
+  },[])
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    const error = ValidateError(name, value);
-    setFormData({ ...formData, [name]: value });
-
-    switch (name) {
-      case "email":
-        setEmailError(error);
-        break;
-      case "password":
-        setPasswordError(error);
-        break;
-      default:
-        break;
-    }
-
-  };
+  React.useEffect(() => {
+    const err = errors.email === '' && errors.password === ''
+    setButtonStatus(!err)
+  }, [errors])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser(formData);
-  };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     const userData = await authorize(formData.email, formData.password);
-  //     localStorage.setItem("jwt", userData.token);
-  //     navigate("/profile");
-  //   } catch (error) {
-  //     setNameError("Что-то пошло не так. Попробуйте еще раз.");
-  //   }
-  // };
+    cleaner();
+    loginUser(form)
+  }
 
   return (
     <section className="ident ident-login">
@@ -60,31 +37,38 @@ export default function Login({ loginUser, buttonText }) {
           />
         </Link>
         <p className="ident__welcome">Рады видеть!</p>
-        <form onSubmit={handleSubmit} name="login" className="ident__form">
+        <form onSubmit={handleSubmit} name="login" className="ident__form" noValidate>
           <label className="ident-input-label">E-mail</label>
           <input
             name="email"
             type="email"
+            minLength={5}
+            maxLength={30}
             className="input"
-            value={formData.email}
+            value={form.email}
             onChange={handleChange}
+            pattern={emailRegExp.toString().slice(1,-1)}
+            title="Введите минимум 6 символов"
             placeholder="Введите E-mail"
             required
           />
-          <span className="input-error">{emailError}</span>
+          <span className="input-error">{errors.email}</span>
           <label className="ident-input-label">Пароль</label>
           <input
             name="password"
             type="password"
+            minLength={2}
+            maxLength={30}
             className="input"
-            value={formData.password}
+            value={form.password}
             onChange={handleChange}
             placeholder="Введите пароль"
             required
           />
-          <span className="input-error">{passwordError}</span>
+          <span className="input-error">{errors.password}</span>
+          <span className="input-error">{error}</span>
           <div className="login-section-button">
-            <button type="submit" className="ident__button">
+            <button type="submit" className="ident__button" disabled={buttonStatus}>
               {buttonText}
             </button>
             <p className="ident__pararaph">

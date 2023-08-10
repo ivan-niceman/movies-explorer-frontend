@@ -24,3 +24,5 @@
 IP-адрес 62.84.112.26
 
 Frontend: https://nice-man.diploma.nomoreparties.sbs
+
+Backend: https://api.nice-man.diploma.nomoreparties.sbs

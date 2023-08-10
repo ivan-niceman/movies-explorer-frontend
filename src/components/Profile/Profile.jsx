@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import ValidateError from "../../utils/ValidateError/ValidateError";
 
-export default function Profile({ profileNameError }) {
+export default function Profile({ profileNameError, logOut }) {
   const [name, setName] = React.useState('Иван');
 const [email, setEmail] = React.useState('pochta@yandex.ru');
 
@@ -16,11 +16,6 @@ function handleNameChange(e) {
   const error = ValidateError("name", newName);
     profileNameError(error);
     setNameError(error);
-  // if (newName.trim().length === 0) {
-  //   profileNameError('Введите имя');
-  // } else {
-  //   profileNameError('');
-  // }
 }
 
 function handleEditName() {
@@ -32,12 +27,6 @@ function handleEditName() {
   }, 0);
 }
 
-// function messageError() {
-//   if (name.length === 1) {
-//     profileNameError.textContent='Введите имя';
-//   }
-// }
-
 function handleSaveChanges() {
   setIsEditingName(false);
 }
@@ -45,6 +34,9 @@ function handleKeyDown(e) {
   if (e.key === "Enter") {
     handleSaveChanges();
   }
+}
+function handleLogOut() {
+  logOut()
 }
 
   return (
@@ -97,7 +89,7 @@ function handleKeyDown(e) {
             Редактировать
           </button>
         )}
-        <Link to="/signin" className="profile__logout">Выйти из аккаунта</Link>
+        <Link to="/signin" className="profile__logout" onClick={handleLogOut}>Выйти из аккаунта</Link>
       </div>
     </section>
   );

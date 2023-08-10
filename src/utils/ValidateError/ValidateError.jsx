@@ -10,6 +10,8 @@ export default function ValidateError(name, value) {
       }
     case "password":
       return value === "" ? "Пароль не может быть пустым" : value.length < 2 ? "Пароль должен содержать минимум 2 символа" : "";
+      case "search":
+        return value === "" ? "Нужно ввести ключевое слово" : "";
     default:
       return "";
   }

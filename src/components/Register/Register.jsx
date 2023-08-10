@@ -2,62 +2,33 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import ValidateError from "../../utils/ValidateError/ValidateError";
+import { emailRegExp } from '../../utils/constants';
+import useForm from '../../hooks/useForm'
 // import { register } from "../../utils/auth";
 
-export default function Register({ registerUser, onChange, buttonText }) {
-  const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+export default function Register({ registerUser, buttonText, error, cleaner }) {
+  const [buttonStatus, setButtonStatus] = React.useState(true);
 
-  const navigate = useNavigate();
+  const { form, handleChange, errors } = useForm({
+    name: '',
+    email: '',
+    password: '',
+  })
 
-  const [nameError, setNameError] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState("");
+  React.useEffect(() => {
+    cleaner();
+  },[])
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const error = ValidateError(name, value);
-
-    setFormData({ ...formData, [name]: value });
-
-    switch (name) {
-      case "name":
-        setNameError(error);
-        break;
-      case "email":
-        setEmailError(error);
-        break;
-      case "password":
-        setPasswordError(error);
-        break;
-      default:
-        break;
-    }
-    onChange({
-      ...value,
-      [name]: value,
-    });
-  };
+  React.useEffect(() => {
+    const err = errors.name === '' && errors.email === '' && errors.password === ''
+    setButtonStatus(!err)
+  }, [errors])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser(formData);
-  };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     await register(formData.name, formData.email, formData.password);
-  //     navigate("/signin");
-  //   } catch (error) {
-  //     setNameError("Что-то пошло не так. Попробуйте еще раз.");
-  //   }
-  //   console.log(formData)
-  // };
+    cleaner();
+    registerUser(form)
+  }
 
   return (
     <section className="ident ident-register">
@@ -71,46 +42,50 @@ export default function Register({ registerUser, onChange, buttonText }) {
         </Link>
 
         <p className="ident__welcome">Добро пожаловать!</p>
-        <form onSubmit={handleSubmit} name="register" className="ident__form">
+        <form onSubmit={handleSubmit} name="register" className="ident__form" noValidate>
           <label className="ident-input-label">Имя</label>
           <input
             name="name"
             type="name"
+            minLength={2}
+            maxLength={30}
             className="input"
-            value={formData.name}
+            value={form.name}
             onChange={handleChange}
             placeholder="Введите имя"
             required
           />
-          <span className="input-error">{nameError}</span>
+          <span className="input-error">{errors.name}</span>
           <label className="ident-input-label">E-mail</label>
           <input
             name="email"
             type="email"
             className="input"
-            value={formData.email}
+            value={form.email}
             onChange={handleChange}
             minLength={2}
             maxLength={30}
+            pattern={emailRegExp.toString().slice(1,-1)}
             placeholder="Введите E-mail"
             required
           />
-          <span className="input-error">{emailError}</span>
+          <span className="input-error">{errors.email}</span>
           <label className="ident-input-label">Пароль</label>
           <input
             name="password"
             type="password"
             className="input"
-            value={formData.password}
+            value={form.password}
             onChange={handleChange}
             minLength={2}
             maxLength={30}
             placeholder="Введите пароль"
             required
           />
-          <span className="input-error">{passwordError}</span>
+          <span className="input-error">{errors.password}</span>
+          <span className="input-error">{error}</span>
           <div className="register-section-button">
-            <button type="submit" className="ident__button">
+            <button type="submit" className="ident__button" disabled={buttonStatus}>
               {buttonText}
             </button>
             <p className="ident__pararaph">

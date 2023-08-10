@@ -1,15 +1,20 @@
-import React from 'react';
+import { useState } from "react"
 
-export default function useForm() {
-  const [formValue, setFormValue] = React.useState({ email: "", password: "" });
+export default function useForm (initialState) {
+  const [form, setForm] = useState(initialState);
+  const [errors, setErrors] = useState({});
 
-  const handleChange = (evt) => {
-    const input = evt.target;
-    setFormValue({
-      ...setFormValue,
-      [input.name]: input.value,
-    });
-  };
+  const handleChange = (e) => {
+    const input = e.target;
+    setErrors({
+      ...errors,
+      [input.name]: input.validationMessage
+    })
+    setForm({
+      ...form,
+      [input.name]: input.value
+    })
+  }
 
-  return { formValue, handleChange };
+  return {form, handleChange, errors}
 }

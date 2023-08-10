@@ -1,10 +1,8 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import React from "react";
-import "./App.css";
-// import { api } from "../../utils/api";
-import * as auth from "../../utils/auth";
-// import { CurrentUserContext } from "../../utils/contexts/CurrentUserContext";
-// import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
+import { api } from "../../utils/MainApi";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import Header from "../Header/Header";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -18,120 +16,208 @@ import Profile from "../Profile/Profile";
 import Error from "../Error/Error";
 
 export default function App() {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
+  const [token, setToken] = React.useState();
+  const [isLoggedIn, setLoggedIn] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [userData, setUserData] = React.useState({ email: "" });
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [status, setStatus] = React.useState(false);
+  const [editUserRes, setEditUserRes] = React.useState('');
+  const [registerError, setRegisterError] = React.useState('');
+  const [loginError, setLoginError] = React.useState('');
+  const [profileErr, setProfileErr] = React.useState('');
 
-  const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  React.useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      setToken(jwt);
+    } else setLoggedIn(false);
+  }, []);
 
-  const [likedMovies, setLikedMovies] = React.useState([]);
-
-  const addLikedMovie = (movie) => {
-    if (!likedMovies.some((m) => m.id === movie.id)) {
-      setLikedMovies([...likedMovies, movie]);
+  React.useEffect(() => {
+    if (token) {
+      api.setToken(token);
+      api.getCurrentUser()
+        .then((res) => {
+          setCurrentUser({ name: res.name, email: res.email, _id: res._id })
+          setLoggedIn(true);
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-  };
+  }, [token]);
 
+  function cleanFormMasseges() {
+    setEditUserRes('');
+    setRegisterError('');
+    setLoginError('');
+    setProfileErr('');
+  }
 
-  const handleFormChange = (updatedFormData) => {
-    setFormData(updatedFormData);
-  };
+  function handlerRegUser({ name, email, password }) {
+    setIsLoading(true);
+    api.register(name, email, password)
+      .then((data) => {
+        handlerLogIn({ email, password })
+      })
+      .catch(err => {
+        if (err.message === 'Ошибка: 409') {
+          setRegisterError('Пользователь с таким E-mail уже существует');
+        }
+        if (err.message === 'Ошибка: 500') {
+          setRegisterError('На сервере произошла ошибка');
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
 
-  const loginUser = (userData) => {
-    console.log(userData);
-  };
+  function handlerLogIn({ email, password }) {
+    setIsLoading(true);
+    api.authorize(email, password)
+      .then(({ token }) => {
+        localStorage.setItem('jwt', token);
+        setToken(token);
+        setLoggedIn(true);
+        navigate('/movies', { replace: true });
+      })
+      .catch(err => {
+        if (err.message === 'Ошибка: 401') {
+          setLoginError('Вы ввели неправильный логин или пароль');
+        }
+        if (err.message === 'Ошибка: 500') {
+          setLoginError('На сервере произошла ошибка');
+        }
+      })
+      .finally(() => setIsLoading(false))
+  }
 
-  const registerUser = (userData) => {
-    console.log(userData);
-  };
-  const handleProfileNameError = (errorMessage) => {
-    console.log(errorMessage);
-  };
+  function logOut() {
+    localStorage.clear();
+    setLoggedIn(false);
+    api.setToken('');
+    navigate('/', { replace: true });
+  }
+
+  function handleEditUser({ name, email }) {
+    setIsLoading(true);
+    api.setUserInfo(name, email)
+      .then((updateUser) => {
+        setCurrentUser(updateUser);
+        setEditUserRes('Информация о пользователе обновлена');
+      })
+      .catch(err => {
+        if (err.message === 'Ошибка: 409') {
+          setProfileErr('Пользователь с таким email уже существует');
+        } else {
+          setProfileErr('При обновлении профиля произошла ошибка');
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      });
+  }
 
   return (
-    <div className="App">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Main />
-              <Footer />
-            </>
-          }
-        />
-
-        <Route
-          path="/signin"
-          element={
-            <Login
-            value={formData}
-              onChange={handleFormChange}
-              loginUser={loginUser}
-              buttonText={isLoading ? "Войти..." : "Войти"}
-            />
-          }
-        />
-
-        <Route
-          path="/signup"
-          element={
-            <Register
-              value={formData}
-              onChange={handleFormChange}
-              registerUser={registerUser}
-              buttonText={
-                isLoading ? "Зарегистрироваться..." : "Зарегистрироваться"
+    isLoggedIn === null ? <Preloader /> :
+      <CurrentUserContext.Provider value={{ currentUser, token }}>
+        <div className="App">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Header />
+                  <Main />
+                  <Footer />
+                </>
               }
             />
-          }
-        />
 
-        <Route
-          path="/profile"
-          element={
-            <>
-              <Header />
-              <Profile profileNameError={handleProfileNameError} />
-            </>
-          }
-        />
+            {!isLoggedIn && <Route
+              path="/signin"
+              element={
+                <Login
+                  onLogin={handlerLogIn}
+                  error={loginError}
+                  buttonText={isLoading ? "Войти..." : "Войти"}
+                  cleaner={cleanFormMasseges}
+                />
+              }
+            />}
 
-        <Route
-          path="/movies"
-          element={
-            <>
-              <Header />
-              <SearchForm />
-              <Movies />
-              <Footer />
-              <Preloader />
-            </>
-          }
-        />
+            {!isLoggedIn && <Route
+              path="/signup"
+              element={
+                <Register
+                  registerUser={handlerRegUser}
+                  error={registerError}
+                  buttonText={
+                    isLoading ? "Зарегистрироваться..." : "Зарегистрироваться"
+                  }
+                  cleaner={cleanFormMasseges}
+                />
+              }
+            /> }
 
-        <Route
-          path="/saved-movies"
-          element={
-            <>
-              <Header />
-              <SearchForm />
-              <SavedMovies likedMovies={likedMovies} />
-              <Footer />
-            </>
-          }
-        />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <Header />
+                      <Profile />
+                    </>
+                  }
+                  loggedIn={isLoggedIn}
+                  logOut={logOut}
+                  onEditUser={handleEditUser}
+                  buttonText={isLoading ? 'Сохранить...' : 'Сохранить'}
+                  requestErr={profileErr}
+                  requestRes={editUserRes}
+                  cleaner={cleanFormMasseges}
+                />
+              }
+            />
 
-        <Route path="/error" element={<Error />} />
+            <Route
+              path="/movies"
+              element={
+                <ProtectedRoute
+                element={
+                  <>
+                    <Header />
+                    <SearchForm />
+                    <Movies />
+                    <Footer />
+                  </>
+                }
+                loggedIn={isLoggedIn}
+                />}
+            />
 
-        <Route path="*" element={<Error />} />
-      </Routes>
-    </div>
+            <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <Header />
+                      <SearchForm />
+                      <SavedMovies />
+                      <Footer />
+                    </>
+                  }
+                  loggedIn={isLoggedIn}
+                />
+              }
+            />
+
+            <Route path="/*" element={<Error />} />
+          </Routes>
+        </div>
+      </CurrentUserContext.Provider>
   );
 }

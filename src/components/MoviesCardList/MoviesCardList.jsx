@@ -1,24 +1,24 @@
 import React from "react";
 import MoviesCard from '../MoviesCard/MoviesCard'
 
-export default function MoviesCardList({ moviesData }) {
-  if (!Array.isArray(moviesData) || moviesData.length === 0) {
-    return moviesData;
-  }
+export default function MoviesCardList({ moviesData, onClick, buttonVisibility, onSaveClick, checkSaveMovie, onDeleteClick }) {
 
   return (
     <>
       <ul className="movies__card-list">
-      {moviesData.map((movie) => (
+      {moviesData.map((movie, index) => (
         <MoviesCard
-          key={movie.id}
-          cardName={movie.cardName}
-          cardTime={movie.cardTime}
-          cardLink={movie.cardLink}
+          key={movie._id || movie.id}
+          movie={movie}
+          onSaveClick={onSaveClick}
+          onDeleteClick={onDeleteClick}
+          isSaved = {checkSaveMovie}
         />
       ))}
       </ul>
-      <button className='button-more-movies'>Ещё</button>
+      {buttonVisibility && (
+        <button className="button-more-movies" onClick={onClick}>Ещё</button>
+      )}
     </>
   )
 }
