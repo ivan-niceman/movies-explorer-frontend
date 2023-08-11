@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { emailRegExp } from '../../utils/constants'
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
-import useForm from '../hooks/useForm'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import useForm from '../../hooks/useForm'
 
 export default function Profile({ logOut, onEditUser, buttonText, requestErr, requestRes, cleaner }) {
   const { currentUser } = React.useContext(CurrentUserContext);
