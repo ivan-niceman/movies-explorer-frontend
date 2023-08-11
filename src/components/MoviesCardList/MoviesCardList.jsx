@@ -3,11 +3,11 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import { useLocation } from "react-router-dom";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import BASE_URL from "../../utils/MainApi";
 import {
   WINDOW_DESCTOP_S,
   WINDOW_TABLE_M,
   WINDOW_TABLE_S,
-  BASE_URL,
 } from "../../utils/constants";
 
 export default function MoviesCardList({

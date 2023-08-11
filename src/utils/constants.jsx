@@ -1,4 +1,5 @@
-const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
+// const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
+import { BASE_URL } from './MainApi';
 
 
 export const emailRegExp = /^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$/;
