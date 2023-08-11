@@ -1,91 +1,94 @@
 import { Link } from "react-router-dom";
-import React from "react";
-import ValidateError from "../../utils/ValidateError/ValidateError";
+import React, { useState } from "react";
+import { emailRegExp } from '../../utils/constants'
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
+import useForm from '../hooks/useForm'
 
-export default function Profile({ profileNameError, logOut }) {
-  const [name, setName] = React.useState('Иван');
-const [email, setEmail] = React.useState('pochta@yandex.ru');
+export default function Profile({ logOut, onEditUser, buttonText, requestErr, requestRes, cleaner }) {
+  const { currentUser } = React.useContext(CurrentUserContext);
+  const [initChange, setInitChange] = useState(false);
+  const [buttonStatus, setButtonStatus] = React.useState(true);
+  const { form, handleChange, errors } = useForm({
+    name: currentUser.name,
+    email: currentUser.email,
+  })
 
-const [isEditingName, setIsEditingName] = React.useState(false);
-const [nameError, setNameError] = React.useState("");
-const nameInputRef = React.useRef(null);
+  React.useEffect(() => {
+    cleaner();
+  },[])
 
-function handleNameChange(e) {
-  const newName = e.target.value;
-  setName(newName);
-  const error = ValidateError("name", newName);
-    profileNameError(error);
-    setNameError(error);
-}
+  React.useEffect(() => {
+    const err = errors.name === '' || errors.email === ''
+    setButtonStatus(!err)
+  }, [errors])
 
-function handleEditName() {
-  setIsEditingName(true);
-  setTimeout(() => {
-    if (nameInputRef.current) {
-      nameInputRef.current.focus();
-    }
-  }, 0);
-}
+  React.useEffect(() => {
+    const err = form.name !== currentUser.name || form.email !== currentUser.email
+    setButtonStatus(!err)
+  }, [form])
 
-function handleSaveChanges() {
-  setIsEditingName(false);
-}
-function handleKeyDown(e) {
-  if (e.key === "Enter") {
-    handleSaveChanges();
+  function handleClickEditButton(event) {
+    event.preventDefault();
+    setInitChange(true);
   }
-}
-function handleLogOut() {
-  logOut()
-}
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onEditUser(form);
+    setInitChange(false);
+    cleaner();
+  }
+
+  function handleLogOut() {
+    logOut()
+  }
 
   return (
     <section className="profile">
       <div className="profile__user">
-        <h1 className="profile__welcome">Привет, {name}!</h1>
-        <form name="login" className="profile__user-form">
+        <h1 className="profile__welcome">Привет, {currentUser.name}!</h1>
+        <form name="edit" className="profile__user-form" onSubmit={handleSubmit}>
           <div className="profile__block-name">
             <label className="ident-input-label">Имя</label>
-            {isEditingName ? (
-              <input
-              ref={nameInputRef}
-              name="name"
-              type="text"
-              className="profile__user-name"
-              value={name}
-              onChange={handleNameChange}
-              onKeyDown={handleKeyDown}
-              required
-            />
-            ) : (
               <input
               name="name"
               type="text"
               className="profile__user-name"
-              value={name}
+              minLength='2'
+              placeholder='Имя'
+              value={form.name}
+              onChange={handleChange}
+              disabled={!initChange}
               required
             />
-            )}
           </div>
-            <span className="input-error error-name-message">{nameError}</span>
+            <span className="input-error error-name-message">{errors.name}</span>
           <div className="profile__block-email">
             <label className="ident-input-label">E-mail</label>
               <input
               name="email"
               type="email"
               className="profile__user-email"
-              value={email}
+              value={form.email}
+              placeholder='E-mail'
+              onChange={handleChange}
+              pattern={emailRegExp.toString().slice(1,-1)}
+              required
+              disabled={!initChange}
             />
           </div>
+          <span className="input-error error-name-message">{errors.email}</span>
+          <span className="input-error error-name-message">{requestErr}</span>
+          <span className="input-error error-name-message">{requestRes}</span>
         </form>
       </div>
       <div className="profile__footer">
-        {isEditingName ? (
-          <button type="button" className="profile__save__name" onClick={handleSaveChanges} disabled={name.length === 0}>
-            Сохранить
+        {initChange ? (
+          <button type="submit" className="profile__save__name" onClick={handleSubmit} disabled={buttonStatus}>
+            {buttonText}
           </button>
         ) : (
-          <button type="button" className="profile__edit" onClick={handleEditName}>
+          <button type="button" className="profile__edit" onClick={handleClickEditButton}>
             Редактировать
           </button>
         )}
