@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { api } from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
@@ -17,23 +17,23 @@ import Error from "../Error/Error";
 
 export default function App() {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = React.useState({ name: '', email: '', _id: '' });
-  const [token, setToken] = React.useState();
-  const [isLoggedIn, setLoggedIn] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [editUserRes, setEditUserRes] = React.useState('');
-  const [registerError, setRegisterError] = React.useState('');
-  const [loginError, setLoginError] = React.useState('');
-  const [profileErr, setProfileErr] = React.useState('');
+  const [currentUser, setCurrentUser] = useState({ name: '', email: '', _id: '' });
+  const [token, setToken] = useState();
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [editUserRes, setEditUserRes] = useState('');
+  const [registerError, setRegisterError] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [profileErr, setProfileErr] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       setToken(jwt);
     } else setLoggedIn(false);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (token) {
       api.setToken(token);
       api.getCurrentUser()
@@ -57,20 +57,20 @@ export default function App() {
   function handlerRegUser({ name, email, password }) {
     setIsLoading(true);
     api.register(name, email, password)
-      .then((data) => {
-        handlerLogIn({ email, password })
-      })
-      .catch(err => {
-        if (err.message === 'Ошибка: 409') {
-          setRegisterError('Пользователь с таким E-mail уже существует');
-        }
-        if (err.message === 'Ошибка: 500') {
-          setRegisterError('На сервере произошла ошибка');
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    .then((data) => {
+      handlerLogIn({ email, password })
+    })
+    .catch(err => {
+      if (err.message === 'Ошибка: 409') {
+        setRegisterError('Пользователь с таким email уже существует');
+      }
+      if (err.message === 'Ошибка: 500') {
+        setRegisterError('На сервере произошла ошибка');
+      }
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function handlerLogIn({ email, password }) {
@@ -120,7 +120,6 @@ export default function App() {
   }
 
   return (
-    isLoggedIn === null ? <Preloader /> :
       <CurrentUserContext.Provider value={{ currentUser, token }}>
         <div className="App">
           <Routes>
