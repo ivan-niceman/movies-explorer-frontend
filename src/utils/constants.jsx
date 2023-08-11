@@ -1,9 +1,9 @@
-export const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
-// export const BASE_URL = 'http://localhost:3000';
+// export const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
+export const BASE_URL = 'http://localhost:3000';
 export const beatfilm_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
 
-export const emailRegExp = /^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$/.toString().slice(1, -1);
+export const emailRegExp = /^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$/;
 
 export const SCREEN_S = 750;
 export const SCREEN_M = 1278;
