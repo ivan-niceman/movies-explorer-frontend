@@ -80,7 +80,7 @@ export default function App() {
         localStorage.setItem('jwt', token);
         setToken(token);
         setLoggedIn(true);
-        navigate('/movies', { replace: true });
+        navigate('/profile', { replace: true });
       })
       .catch(err => {
         if (err.message === 'Ошибка: 401') {
