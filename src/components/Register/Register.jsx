@@ -40,13 +40,13 @@ export default function Register({ registerUser, buttonText, error, cleaner }) {
         </Link>
 
         <p className="ident__welcome">Добро пожаловать!</p>
-        <form onSubmit={handleSubmit} name="register" className="ident__form" noValidate>
+        <form onSubmit={handleSubmit} name="Register" className="ident__form" noValidate>
           <label className="ident-input-label">Имя</label>
           <input
             name="name"
-            type="name"
-            minLength={2}
-            maxLength={30}
+            type="text"
+            minLength='2'
+            maxLength='30'
             className="input"
             value={form.name}
             onChange={handleChange}
@@ -61,8 +61,8 @@ export default function Register({ registerUser, buttonText, error, cleaner }) {
             className="input"
             value={form.email}
             onChange={handleChange}
-            minLength={2}
-            maxLength={30}
+            minLength='2'
+            maxLength='30'
             pattern={emailRegExp.toString().slice(1,-1)}
             placeholder="Введите E-mail"
             required
@@ -75,8 +75,8 @@ export default function Register({ registerUser, buttonText, error, cleaner }) {
             className="input"
             value={form.password}
             onChange={handleChange}
-            minLength={2}
-            maxLength={30}
+            minLength='2'
+            maxLength='30'
             placeholder="Введите пароль"
             required
           />

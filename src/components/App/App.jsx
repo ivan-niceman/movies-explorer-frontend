@@ -120,6 +120,7 @@ export default function App() {
   }
 
   return (
+    isLoggedIn === false ? <Preloader /> :
       <CurrentUserContext.Provider value={{ currentUser, token }}>
         <div className="App">
           <Routes>
@@ -134,7 +135,7 @@ export default function App() {
               }
             />
 
-            <Route
+            {!isLoggedIn && <Route
               path="/signin"
               element={
                 <Login
@@ -144,9 +145,9 @@ export default function App() {
                   cleaner={cleanFormMasseges}
                 />
               }
-            />
+            /> }
 
-            <Route
+            {!isLoggedIn && <Route
               path="/signup"
               element={
                 <Register
@@ -158,7 +159,7 @@ export default function App() {
                   cleaner={cleanFormMasseges}
                 />
               }
-            />
+            /> }
 
             <Route
               path="/profile"
