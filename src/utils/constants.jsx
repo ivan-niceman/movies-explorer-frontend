@@ -1,6 +1,4 @@
-// const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
-// const BASE_URL = 'http://localhost:3000';
-const BASE_URL = 'https://api.nomoreparties.co/';
+const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
 
 
 export const emailRegExp = /^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$/;
