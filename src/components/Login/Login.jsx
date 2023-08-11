@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import { emailRegExp } from '../../utils/constants';
 import useForm from '../../hooks/useForm';
 
-export default function Login({ loginUser, buttonText, error, cleaner }) {
+export default function Login({ onLogin, buttonText, error, cleaner }) {
   const [buttonStatus, setButtonStatus] = React.useState(true);
   const { form, handleChange, errors } = useForm({
     email: '',
@@ -23,7 +23,7 @@ export default function Login({ loginUser, buttonText, error, cleaner }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     cleaner();
-    loginUser(form)
+    onLogin(form)
   }
 
   return (

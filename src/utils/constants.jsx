@@ -1,5 +1,4 @@
 export const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
-// export const BASE_URL = 'http://localhost:3000';
 export const beatfilm_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
 
@@ -16,8 +15,6 @@ export const MOVIES_CARDS_S = 5;
 export const ADD_MOVIES_CARD_L = 3;
 export const ADD_MOVIES_CARD_M = 2;
 export const ADD_MOVIES_CARD_S = 1;
-
-export const regEmail = /^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$/
 
 export const moviesLocalStorageNames = {
   localMovies: 'beatfilmMovies',

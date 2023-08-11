@@ -19,7 +19,7 @@ export default function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', _id: '' });
   const [token, setToken] = useState();
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [editUserRes, setEditUserRes] = useState('');
   const [registerError, setRegisterError] = useState('');
@@ -31,6 +31,7 @@ export default function App() {
     if (jwt) {
       setToken(jwt);
     } else setLoggedIn(false);
+    // setLoggedIn(true);
   }, []);
 
   useEffect(() => {
@@ -57,20 +58,20 @@ export default function App() {
   function handlerRegUser({ name, email, password }) {
     setIsLoading(true);
     api.register(name, email, password)
-    .then((data) => {
-      handlerLogIn({ email, password })
-    })
-    .catch(err => {
-      if (err.message === 'Ошибка: 409') {
-        setRegisterError('Пользователь с таким email уже существует');
-      }
-      if (err.message === 'Ошибка: 500') {
-        setRegisterError('На сервере произошла ошибка');
-      }
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
+      .then((data) => {
+        handlerLogIn({ email, password })
+      })
+      .catch(err => {
+        if (err.message === 'Ошибка: 409') {
+          setRegisterError('Пользователь с таким email уже существует');
+        }
+        if (err.message === 'Ошибка: 500') {
+          setRegisterError('На сервере произошла ошибка');
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function handlerLogIn({ email, password }) {
@@ -80,7 +81,7 @@ export default function App() {
         localStorage.setItem('jwt', token);
         setToken(token);
         setLoggedIn(true);
-        navigate('/profile', { replace: true });
+        navigate('/movies', { replace: true });
       })
       .catch(err => {
         if (err.message === 'Ошибка: 401') {
@@ -120,7 +121,7 @@ export default function App() {
   }
 
   return (
-    isLoggedIn === false ? <Preloader /> :
+    isLoggedIn === null ? <Preloader /> :
       <CurrentUserContext.Provider value={{ currentUser, token }}>
         <div className="App">
           <Routes>
@@ -139,7 +140,7 @@ export default function App() {
               path="/signin"
               element={
                 <Login
-                  loginUser={handlerLogIn}
+                  onLogin={handlerLogIn}
                   error={loginError}
                   buttonText={isLoading ? "Войти..." : "Войти"}
                   cleaner={cleanFormMasseges}
@@ -151,7 +152,7 @@ export default function App() {
               path="/signup"
               element={
                 <Register
-                  registerUser={handlerRegUser}
+                  onRegister={handlerRegUser}
                   error={registerError}
                   buttonText={
                     isLoading ? "Зарегистрироваться..." : "Зарегистрироваться"
@@ -215,7 +216,7 @@ export default function App() {
               }
             />
 
-            <Route path="/*" element={<Error />} />
+            <Route path={"/*"} element={<Error />} />
           </Routes>
         </div>
       </CurrentUserContext.Provider>

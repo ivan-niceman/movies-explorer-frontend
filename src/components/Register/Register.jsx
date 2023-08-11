@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import { emailRegExp } from '../../utils/constants';
 import useForm from '../../hooks/useForm'
 
-export default function Register({ registerUser, buttonText, error, cleaner }) {
+export default function Register({ onRegister, buttonText, error, cleaner }) {
   const [buttonStatus, setButtonStatus] = React.useState(true);
 
   const { form, handleChange, errors } = useForm({
@@ -25,7 +25,7 @@ export default function Register({ registerUser, buttonText, error, cleaner }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     cleaner();
-    registerUser(form)
+    onRegister(form)
   }
 
   return (
