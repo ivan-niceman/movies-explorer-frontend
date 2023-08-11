@@ -1,109 +1,115 @@
-import { BASE_URL } from './constants';
+export const BASE_URL = "https://nice-man.diploma.nomoreparties.sbs";
 
-class Api {
-  constructor(url) {
-    this._url = url;
-    this._token = '';
+const makeRequest = (url, method, body, token) => {
+  const options = {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  if (body) {
+    options.body = JSON.stringify(body);
   }
-
-  _getHeaders() {
-    return {
-      Authorization: this._token,
-      "Content-Type": 'application/json'
+  if (token) {
+    options.headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     };
   }
-
-  _getJson(res) {
+  return fetch(`${BASE_URL}/${url}`, options).then((res) => {
     if (!res.ok) {
-      throw new Error(`Ошибка: ${res.status}`)
+      return Promise.reject(res.status);
     }
-    return res.json()
-  }
+    return res.json();
+  });
+};
 
-  _request(url, options) {
-    return fetch(url, options).then(this._getJson)
-  }
+export const authorize = (email, password) => {
+  return makeRequest("signin", "POST", {
+    password: `${password}`,
+    email: `${email}`,
+  });
+};
 
-  authorize(email, password) {
-    return this._request(`${this._url}/signin`, {
-      method: 'POST',
-      headers: this._getHeaders(),
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    });
-  }
+export const register = (name, email, password) => {
+  return makeRequest("signup", "POST", {
+    name: `${name}`,
+    password: `${password}`,
+    email: `${email}`,
+  });
+};
 
-  register(name, email, password) {
-    return this._request(`${this._url}/signup`, {
-      method: 'POST',
-      headers: this._getHeaders(),
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password
-      })
-    });
-  }
+export const getUserData = (token) => {
+  return makeRequest("users/me", "GET", null, token);
+};
 
-  getCurrentUser() {
-    return this._request(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: this._getHeaders()
-    });
-  }
+export const updateUser = (name, email, token) => {
+  return makeRequest(
+    "users/me",
+    "PATCH",
+    {
+      name: `${name}`,
+      email: `${email}`,
+    },
+    token
+  );
+};
 
-  setUserInfo(name, email) {
-    return this._request(`${this._url}/users/me`, {
-      method: 'PATCH',
-      headers: this._getHeaders(),
-      body: JSON.stringify({
-        name: name,
-        email: email
-      })
-    });
-  }
-
-  saveMovie(item) {
-    const movie = {
-      country: item.country,
-      director: item.director,
-      duration: item.duration,
-      year: item.year,
-      description: item.description,
-      image: `https://api.nomoreparties.co/${item.image.url}`,
-      trailerLink: item.trailerLink,
-      thumbnail: `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`,
-      movieId: item.id,
-      nameRU: item.nameRU,
-      nameEN: item.nameEN
+export const addNewMovie = (data, token) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      country: data.country,
+      director: data.director,
+      duration: data.duration,
+      year: data.year,
+      description: data.description,
+      image: `https://api.nomoreparties.co${data.image.url}`,
+      trailerLink: data.trailerLink,
+      thumbnail: `${BASE_URL}${data.image.formats.thumbnail.url}`,
+      movieId: `${data.id}`,
+      nameRU: data.nameRU,
+      nameEN: data.nameEN,
+    }),
+  }).then((res) => {
+    if (!res.ok) {
+      return Promise.reject(res.status);
     }
+    return res.json();
+  });
+};
 
-    return this._request(`${this._url}/movies`, {
-      method: 'POST',
-      headers: this._getHeaders(),
-      body: JSON.stringify(movie)
-    });
-  }
+export const getSavedMovies = (token) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (!res.ok) {
+      return Promise.reject(res.status);
+    }
+    return res.json();
+  });
+};
 
-
-  getCards() {
-    return this._request(`${this._url}/movies`, {
-      headers: this._getHeaders()
-    });
-  }
-
-  deleteCard(id) {
-    return this._request(`${this._url}/movies/${id}`, {
-      method: 'DELETE',
-      headers: this._getHeaders()
-    });
-  }
-
-  setToken(token) {
-    this._token = `Bearer ${token}`;
-  }
-}
-
-export const api = new Api(BASE_URL);
+export const removeMovie = (movieId, token) => {
+  return fetch(`${BASE_URL}/movies/${movieId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (!res.ok) {
+      return Promise.reject(res.status);
+    }
+    return res.json();
+  });
+};

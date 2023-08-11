@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+.button-more-movies_inactive {
+  display: none;
+}
+
 @media(max-width: 768px) {
   .button-more-movies {
     margin: 81px auto 10px;

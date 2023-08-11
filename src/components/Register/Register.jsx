@@ -2,31 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { emailRegExp } from '../../utils/constants';
-import useForm from '../../hooks/useForm'
+import { useFormValidation } from "../../hooks/useFormValidation";
 
-export default function Register({ onRegister, buttonText, error, cleaner }) {
-  const [buttonStatus, setButtonStatus] = React.useState(true);
+export default function Register({ registerUser, buttonText, errorMessage, setErrorMessage }) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormValidation();
 
-  const { form, handleChange, errors } = useForm({
-    name: '',
-    email: '',
-    password: '',
-  })
-
-  React.useEffect(() => {
-    cleaner();
-  },[])
-
-  React.useEffect(() => {
-    const err = errors.name === '' && errors.email === '' && errors.password === ''
-    setButtonStatus(!err)
-  }, [errors])
-
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    cleaner();
-    onRegister(form)
+    registerUser({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    });
+    setErrorMessage("");
   }
+
+  React.useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   return (
     <section className="ident ident-register">
@@ -40,7 +34,7 @@ export default function Register({ onRegister, buttonText, error, cleaner }) {
         </Link>
 
         <p className="ident__welcome">Добро пожаловать!</p>
-        <form onSubmit={handleSubmit} name="Register" className="ident__form" noValidate>
+        <form onSubmit={handleSubmit} name="register" className="ident__form" noValidate>
           <label className="ident-input-label">Имя</label>
           <input
             name="name"
@@ -48,9 +42,10 @@ export default function Register({ onRegister, buttonText, error, cleaner }) {
             minLength='2'
             maxLength='30'
             className="input"
-            value={form.name}
+            value={values.name || ""}
             onChange={handleChange}
             placeholder="Введите имя"
+            pattern="[a-zA-ZА-яёЁ\-\s]*"
             required
           />
           <span className="input-error">{errors.name}</span>
@@ -59,7 +54,7 @@ export default function Register({ onRegister, buttonText, error, cleaner }) {
             name="email"
             type="email"
             className="input"
-            value={form.email}
+            value={values.email || ""}
             onChange={handleChange}
             minLength='2'
             maxLength='30'
@@ -73,7 +68,7 @@ export default function Register({ onRegister, buttonText, error, cleaner }) {
             name="password"
             type="password"
             className="input"
-            value={form.password}
+            value={values.password || ""}
             onChange={handleChange}
             minLength='2'
             maxLength='30'
@@ -81,9 +76,13 @@ export default function Register({ onRegister, buttonText, error, cleaner }) {
             required
           />
           <span className="input-error">{errors.password}</span>
-          <span className="input-error">{error}</span>
+          <span className="input-error">{errorMessage}</span>
           <div className="register-section-button">
-            <button type="submit" className="ident__button" disabled={buttonStatus}>
+            <button type="submit" className={
+              !isValid
+              ? "ident__button ident__button_disabled"
+              : "ident__button"
+            } disabled={!isValid}>
               {buttonText}
             </button>
             <p className="ident__pararaph">
