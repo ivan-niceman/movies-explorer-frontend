@@ -134,7 +134,7 @@ export default function App() {
               }
             />
 
-            {!isLoggedIn && <Route
+            <Route
               path="/signin"
               element={
                 <Login
@@ -144,9 +144,9 @@ export default function App() {
                   cleaner={cleanFormMasseges}
                 />
               }
-            />}
+            />
 
-            {!isLoggedIn && <Route
+            <Route
               path="/signup"
               element={
                 <Register
@@ -158,7 +158,7 @@ export default function App() {
                   cleaner={cleanFormMasseges}
                 />
               }
-            /> }
+            />
 
             <Route
               path="/profile"
