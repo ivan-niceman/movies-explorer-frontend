@@ -308,7 +308,10 @@ export default function App() {
   return (
     <div className="App">
       <CurrentUserContext.Provider value={ currentUser }>
-        <Routes>
+      {isLoading ? (
+        <Preloader />
+        ) : (
+          <Routes>
           <Route
             path="/"
             element={
@@ -427,6 +430,7 @@ export default function App() {
 
           <Route path={"/*"} element={<Error />} />
         </Routes>
+        )}
       </CurrentUserContext.Provider>
     </div>
   );
