@@ -1,60 +1,67 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { ONE_HOUR } from "../../utils/constants";
 
-export default function MoviesCard({ movie, isSaved, onSaveClick, onDeleteClick }) {
-  const location = React.useLocation();
+export default function MoviesCard({ trailerLink, link, title, duration, onLikeClick, savedMovies, card, handleDeleteMovie, handleRemoveMovie }) {
+  const [isCardLiked, setIsCardLiked] = React.useState(false);
+  const location = useLocation();
 
-  const card = {
-    nameRU: movie.nameRU,
-    duration: movie.duration,
-    image: movie.image.url ? `https://api.nomoreparties.co/${movie.image.url}` : movie.image,
-    trailerLink: movie.trailerLink
+  React.useEffect(() => {
+    const isSavedMovie = location.pathname === "/saved-movies";
+    if (!isSavedMovie) {
+      const result = savedMovies.some((item) => card.id === item.movieId);
+      setIsCardLiked(result);
+    }
+  }, [savedMovies]);
+
+  const handleOnClick = () => {
+    if (!isCardLiked) {
+      onLikeClick(card);
+      setIsCardLiked(true);
+    } else {
+      handleRemoveMovie(card);
+      setIsCardLiked(false);
+    }
   };
 
-  function handlerSaveButton() {
-    onSaveClick(movie)
-  }
+  const onDeleteClick = () => {
+    handleDeleteMovie(card);
+  };
 
-  function handlerDeleteButton() {
-    onDeleteClick(movie)
+  function transformDuration(duration) {
+    const hours = Math.floor(duration / ONE_HOUR);
+    const minutes = duration % ONE_HOUR;
+    if (hours === 0) {
+      return `${minutes}м`;
+    } else {
+      return `${hours}ч ${minutes}м`;
+    }
   }
 
   return (
     <li className="movie">
       <div className="movie__block">
         <div className="movie__info">
-          <h2 className="movie__name">{card.nameRU}</h2>
-          <span className="movie__time">
-            {Math.floor(card.duration / 60)}ч
-            {card.duration - 60 * Math.floor(card.duration / 60)}м
-          </span>
+          <h2 className="movie__name">{title}</h2>
+          <span className="movie__time">{transformDuration(duration)}</span>
         </div>
-        {location.pathname === "/movies" &&
-          isSaved(movie) ?
+        {location.pathname === "/movies" ? (
           <button
           aria-label="лайк"
           type="button"
-          className={`movie__like movie__like_active`}
-          onClick={handlerDeleteButton}
-        /> :
-        <button
+          className={`movie__like_${
+            !isCardLiked ? "inactive" : "active"
+          }`}
+          onClick={handleOnClick}
+        />) : ( <button
           aria-label="лайк"
           type="button"
-          className={`movie__like`}
-          onClick={handlerSaveButton}
-        />
-        }
-        {location.pathname === "/saved-movies" &&
-          <button
-            aria-label="лайк"
-            type="button"
-            className={`movie__like movie__like_active`}
-            onClick={handlerDeleteButton}
-          />
-        }
+          className={`movie__like_active`}
+          onClick={onDeleteClick}
+        />)}
       </div>
-      <Link href={card.trailerLink} target="_blank">
-        <img src={card.image} alt={card.nameRU} className="movie__image" />
+      <Link to={trailerLink} target="_blank">
+        <img src={link} alt={title} className="movie__image" />
       </Link>
     </li>
   );

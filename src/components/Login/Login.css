@@ -98,6 +98,7 @@
 
 .ident__button_disabled {
   opacity: 0.5;
+  cursor: auto;
 }
 
 .ident__pararaph {

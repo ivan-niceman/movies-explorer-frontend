@@ -1,95 +1,76 @@
 import { Link } from "react-router-dom";
-import React from "react";
-import ValidateError from "../../utils/ValidateError/ValidateError";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import React, { useContext, useEffect } from "react";
+import { useFormValidation } from "../../hooks/useFormValidation.jsx";
 
-export default function Profile({ profileNameError, logOut }) {
-  const [name, setName] = React.useState('Иван');
-const [email, setEmail] = React.useState('pochta@yandex.ru');
+export default function Profile({ logOut, updateUser, errorMessage, setErrorMessage }) {
+  const currentUser = useContext(CurrentUserContext);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormValidation();
 
-const [isEditingName, setIsEditingName] = React.useState(false);
-const [nameError, setNameError] = React.useState("");
-const nameInputRef = React.useRef(null);
-
-function handleNameChange(e) {
-  const newName = e.target.value;
-  setName(newName);
-  const error = ValidateError("name", newName);
-    profileNameError(error);
-    setNameError(error);
-}
-
-function handleEditName() {
-  setIsEditingName(true);
-  setTimeout(() => {
-    if (nameInputRef.current) {
-      nameInputRef.current.focus();
-    }
-  }, 0);
-}
-
-function handleSaveChanges() {
-  setIsEditingName(false);
-}
-function handleKeyDown(e) {
-  if (e.key === "Enter") {
-    handleSaveChanges();
+  function handleSubmit(e) {
+    e.preventDefault();
+    updateUser({
+      name: values.name,
+      email: values.email,
+    });
+    setErrorMessage("");
   }
-}
-function handleLogOut() {
-  logOut()
-}
+
+  useEffect(() => {
+    if (currentUser) {
+      resetForm(currentUser, {}, true);
+    }
+  }, [currentUser, resetForm]);
+
+  const requireValidity =
+    !isValid ||
+    (currentUser.name === values.name && currentUser.email === values.email);
 
   return (
     <section className="profile">
       <div className="profile__user">
-        <h1 className="profile__welcome">Привет, {name}!</h1>
-        <form name="login" className="profile__user-form">
+        <h1 className="profile__welcome">{`Привет, ${currentUser.name}!`}</h1>
+        <form name="edit" className="profile__user-form" onSubmit={handleSubmit} noValidate>
           <div className="profile__block-name">
             <label className="ident-input-label">Имя</label>
-            {isEditingName ? (
-              <input
-              ref={nameInputRef}
-              name="name"
-              type="text"
-              className="profile__user-name"
-              value={name}
-              onChange={handleNameChange}
-              onKeyDown={handleKeyDown}
-              required
-            />
-            ) : (
               <input
               name="name"
               type="text"
               className="profile__user-name"
-              value={name}
+              minLength='2'
+              maxLength="30"
+              placeholder='Имя'
+              value={values.name || ""}
+              onChange={handleChange}
+              pattern="[a-zA-ZА-яёЁ\-\s]*"
               required
             />
-            )}
           </div>
-            <span className="input-error error-name-message">{nameError}</span>
+            <span className="input-error error-name-message">{errors.name}</span>
           <div className="profile__block-email">
             <label className="ident-input-label">E-mail</label>
               <input
               name="email"
               type="email"
               className="profile__user-email"
-              value={email}
+              value={values.email || ""}
+              placeholder='E-mail'
+              onChange={handleChange}
+              minLength="2"
+              maxLength="30"
+              required
             />
           </div>
+          <span className="input-error error-name-message">{errors.email}</span>
+          <span className="input-error error-name-message">{errorMessage}</span>
         </form>
       </div>
       <div className="profile__footer">
-        {isEditingName ? (
-          <button type="button" className="profile__save__name" onClick={handleSaveChanges} disabled={name.length === 0}>
-            Сохранить
-          </button>
-        ) : (
-          <button type="button" className="profile__edit" onClick={handleEditName}>
+          <button type="submit" className="profile__edit" disabled={requireValidity ? true : false}>
             Редактировать
           </button>
-        )}
-        <Link to="/signin" className="profile__logout" onClick={handleLogOut}>Выйти из аккаунта</Link>
+        <Link to="/signin" className="profile__logout" onClick={logOut}>Выйти из аккаунта</Link>
       </div>
     </section>
   );

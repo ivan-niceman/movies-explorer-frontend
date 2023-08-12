@@ -1,30 +1,25 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import logo from "../../images/logo.svg";
-import { emailRegExp } from '../../utils/constants';
-import useForm from '../../hooks/useForm';
+import { useFormValidation } from '../../hooks/useFormValidation';
 
-export default function Login({ loginUser, buttonText, error, cleaner }) {
-  const [buttonStatus, setButtonStatus] = React.useState(true);
-  const { form, handleChange, errors } = useForm({
-    email: '',
-    password: ''
-  })
+export default function Login({ loginUser, buttonText, errorMessage, isActiveFormBtn, setErrorMessage }) {
 
-  React.useEffect(() => {
-    cleaner();
-  },[])
+  const { values, handleChange, errors, isValid, resetForm } =
+  useFormValidation();
 
-  React.useEffect(() => {
-    const err = errors.email === '' && errors.password === ''
-    setButtonStatus(!err)
-  }, [errors])
+function handleSubmit(e) {
+  e.preventDefault();
+  loginUser({
+    email: values.email,
+    password: values.password,
+  });
+  setErrorMessage("");
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    cleaner();
-    loginUser(form)
-  }
+React.useEffect(() => {
+  resetForm();
+}, [resetForm]);
 
   return (
     <section className="ident ident-login">
@@ -42,12 +37,9 @@ export default function Login({ loginUser, buttonText, error, cleaner }) {
           <input
             name="email"
             type="email"
-            minLength={5}
-            maxLength={30}
             className="input"
-            value={form.email}
+            value={values.email || ""}
             onChange={handleChange}
-            pattern={emailRegExp.toString().slice(1,-1)}
             title="Введите минимум 6 символов"
             placeholder="Введите E-mail"
             required
@@ -57,18 +49,21 @@ export default function Login({ loginUser, buttonText, error, cleaner }) {
           <input
             name="password"
             type="password"
-            minLength={2}
-            maxLength={30}
             className="input"
-            value={form.password}
+            value={values.password || ""}
             onChange={handleChange}
             placeholder="Введите пароль"
             required
           />
           <span className="input-error">{errors.password}</span>
-          <span className="input-error">{error}</span>
+          <span className="input-error">{errorMessage}</span>
           <div className="login-section-button">
-            <button type="submit" className="ident__button" disabled={buttonStatus}>
+            <button type="submit" className={
+              !isValid
+              ? "ident__button ident__button_disabled"
+              : "ident__button"
+            }
+            disabled={!isValid || !isActiveFormBtn} >
               {buttonText}
             </button>
             <p className="ident__pararaph">

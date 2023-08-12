@@ -1,35 +1,23 @@
-export const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
-export const beatfilm_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
 
+export const emailRegExp = /^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$/;
 
-export const emailRegExp = /^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$/.toString().slice(1, -1);
+const SHORT_DURATION = 40;
+const ONE_HOUR = 60;
 
-export const SCREEN_S = 750;
-export const SCREEN_M = 1278;
-export const SCREEN_L = 1280;
+const UNAUTHORIZED_ERROR = 401;
+const CONFLICT_ERROR = 409;
 
-export const MOVIES_CARDS_L = 12;
-export const MOVIES_CARDS_M = 8;
-export const MOVIES_CARDS_S = 5;
-
-export const ADD_MOVIES_CARD_L = 3;
-export const ADD_MOVIES_CARD_M = 2;
-export const ADD_MOVIES_CARD_S = 1;
-
-export const regEmail = /^[\w]+@[a-zA-Z]+\.[a-zA-Z]{2,30}$/;
-
-export const moviesLocalStorageNames = {
-  localMovies: 'beatfilmMovies',
-  moviesResalt: 'moviesResalt',
-  moviesSearchText: 'moviesSearchText',
-  moviesStatusCheckbox: 'moviesStatusCheckbox'
-}
-
-export const savedMoviesLocalStorageNames = {
-  localMovies: 'savedMovies',
-  moviesResalt: 'savedMoviesResalt',
-  moviesSearchText: 'savedMoviesSearchText',
-  moviesStatusCheckbox: 'savedMoviesStatusCheckbox'
-}
-
-export const DURATION_SHORT = 40;
+const WINDOW_DESCTOP_S = 1279;
+const WINDOW_TABLE_M = 989;
+const WINDOW_TABLE_S = 629;
+export {
+  SHORT_DURATION,
+  CONFLICT_ERROR,
+  UNAUTHORIZED_ERROR,
+  ONE_HOUR,
+  WINDOW_DESCTOP_S,
+  WINDOW_TABLE_M,
+  WINDOW_TABLE_S,
+  BASE_URL,
+};
