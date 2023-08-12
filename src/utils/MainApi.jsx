@@ -1,4 +1,5 @@
-export const BASE_URL = "https://nice-man.diploma.nomoreparties.sbs";
+// export const BASE_URL = "https://nice-man.diploma.nomoreparties.sbs";
+const BASE_URL = 'https://api.nice-man.diploma.nomoreparties.sbs';
 
 const makeRequest = (url, method, body, token) => {
   const options = {
