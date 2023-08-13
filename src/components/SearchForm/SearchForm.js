@@ -58,6 +58,7 @@ export default function SearchForm({ onSearch, value, setValue, isChecked, setIs
           <label htmlFor="switch" className="switch-label" />
           <p className="switch-text">Короткометражки</p>
         </div>
+        {valueError && ( <span className="input-error">Введите ключевое слово</span> )}
       </form>
     </section>
   );

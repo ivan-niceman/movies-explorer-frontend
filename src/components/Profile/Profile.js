@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import React, { useContext, useEffect } from "react";
-import { useFormValidation } from "../../hooks/useFormValidation.jsx";
+import { useFormValidation } from "../../hooks/useFormValidation";
 
 export default function Profile({ logOut, updateUser, errorMessage, setErrorMessage }) {
   const currentUser = useContext(CurrentUserContext);
