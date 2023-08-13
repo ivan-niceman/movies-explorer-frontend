@@ -2,16 +2,17 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import MobileNav from "../MobileNav/MobileNav";
 
-export default function Header() {
+export default function Header({ loggedIn }) {
   const location = useLocation();
   return (
     <>
-      {location.pathname === "/" ? (
+      {location.pathname === "/" && !loggedIn ? (
         <header className="header-promo">
           <div className="header-promo-top">
           <Link to="/">
             <img src={logo} alt="логотип" className="header-promo-logo" />
           </Link>
+          <MobileNav />
           <span>
             <Link to="/signup" className="header-promo-ident-register">
               Регистрация
@@ -23,7 +24,7 @@ export default function Header() {
         </div>
         </header>
       ) : (
-        <header className="header">
+        <header className="header" style={{background: '#073042'}}>
           <Link to="/">
             <img src={logo} alt="логотип" className="header__logo" />
           </Link>
