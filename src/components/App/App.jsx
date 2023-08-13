@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import Header from "../Header/Header";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import SearchForm from "../SearchForm/SearchForm";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import Preloader from "../Preloader/Preloader";
 import { getCards } from "../../utils/MoviesApi";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import Error from "../Error/Error";
+import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
 import { SHORT_DURATION, CONFLICT_ERROR } from "../../utils/constants";
 import * as MainApi from "../../utils/MainApi";
 
@@ -41,6 +40,7 @@ export default function App() {
     JSON.parse(localStorage.getItem("valueMovies")) || ""
   );
   const [valueMoviesSaved, setValueMoviesSaved] = useState("");
+
 
   useEffect(() => {
     if (
@@ -258,7 +258,7 @@ export default function App() {
 
   const loginUser = ({ email, password }) => {
     setIsActiveFormBtn(false);
-    return MainApi.authorize(email, password)
+    MainApi.authorize(email, password)
       .then((data) => {
         localStorage.setItem("token", data.token);
         setLoggedIn(true);
@@ -307,9 +307,6 @@ export default function App() {
   return (
     <div className="App">
       <CurrentUserContext.Provider value={ currentUser }>
-      {isLoading ? (
-        <Preloader />
-        ) : (
           <Routes>
           <Route
             path="/"
@@ -429,7 +426,6 @@ export default function App() {
 
           <Route path={"/*"} element={<Error />} />
         </Routes>
-        )}
       </CurrentUserContext.Provider>
     </div>
   );
