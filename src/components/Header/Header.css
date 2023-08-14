@@ -89,6 +89,12 @@
   width: 38px;
 }
 
+@media(max-width: 768px) {
+  .header-enter_disable {
+    display: none;
+  }
+}
+
 .header-promo-ident-register {
   font-size: 12px;
   font-weight: 500;
