@@ -33,14 +33,13 @@ export default function App() {
   const [isAllMovies, setIsAllMovies] = useState([]);
   const [isSavedNotFound, setIsSavedIsNotFound] = useState(false);
   const [shortDuration, setShortDuration] = useState(
-    JSON.parse(localStorage.getItem("shortDuration")) || false
+    JSON.parse(localStorage.getItem("shortDuration")) || false,
   );
   const [shortDurationSM, setShortDurationSM] = useState(false);
   const [valueMovies, setValueMovies] = useState(
-    JSON.parse(localStorage.getItem("valueMovies")) || ""
+    JSON.parse(localStorage.getItem("valueMovies")) || "",
   );
   const [valueMoviesSaved, setValueMoviesSaved] = useState("");
-
 
   useEffect(() => {
     if (
@@ -131,7 +130,7 @@ export default function App() {
     }
     localStorage.setItem(
       "moviesByQuerySavedMovies",
-      JSON.stringify(moviesByQuery)
+      JSON.stringify(moviesByQuery),
     );
     setSavedResult(moviesByQuery);
   }
@@ -306,8 +305,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <CurrentUserContext.Provider value={ currentUser }>
-          <Routes>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
           <Route
             path="/"
             element={
@@ -323,11 +322,11 @@ export default function App() {
             path="/signin"
             element={
               <Login
-              isActiveFormBtn={isActiveFormBtn}
-              loginUser={loginUser}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-              buttonText={isLoading ? "Войти..." : "Войти"}
+                isActiveFormBtn={isActiveFormBtn}
+                loginUser={loginUser}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                buttonText={isLoading ? "Войти..." : "Войти"}
               />
             }
           />
@@ -336,10 +335,12 @@ export default function App() {
             path="/signup"
             element={
               <Register
-              registerUser={registerUser}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-              buttonText={ isLoading ? "Зарегистрироваться..." : "Зарегистрироваться" }
+                registerUser={registerUser}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                buttonText={
+                  isLoading ? "Зарегистрироваться..." : "Зарегистрироваться"
+                }
               />
             }
           />
@@ -367,60 +368,61 @@ export default function App() {
             path="/movies"
             element={
               <ProtectedRoute
-              savedMovies={savedMovies}
-              element={
-                <>
-                  <Header />
-                  <SearchForm />
-                  <Movies />
-                  <Footer />
-                </>
-              }
-              loggedIn={loggedIn}
-              onLikeClick={handleCardAdd}
-              handleRemoveMovie={handleRemoveMovie}
-              getSavedMovies={getSavedMovies}
-              handleSearch={handleSearch}
-              valueMovies={valueMovies}
-              setValueMovies={setValueMovies}
-              shortDuration={shortDuration}
-              setShortDuration={setShortDuration}
-              cards={cards}
-              isLoading={isLoading}
-              isNotFound={isNotFound}
-              isErrorSearch={isErrorSearch}
-            />}
+                savedMovies={savedMovies}
+                element={
+                  <>
+                    <Header />
+                    <SearchForm />
+                    <Movies />
+                    <Footer />
+                  </>
+                }
+                loggedIn={loggedIn}
+                onLikeClick={handleCardAdd}
+                handleRemoveMovie={handleRemoveMovie}
+                getSavedMovies={getSavedMovies}
+                handleSearch={handleSearch}
+                valueMovies={valueMovies}
+                setValueMovies={setValueMovies}
+                shortDuration={shortDuration}
+                setShortDuration={setShortDuration}
+                cards={cards}
+                isLoading={isLoading}
+                isNotFound={isNotFound}
+                isErrorSearch={isErrorSearch}
+              />
+            }
           />
 
           <Route
             path="/saved-movies"
             element={
               <ProtectedRoute
-              savedResult={savedResult}
-              handleSearch={handleSearchSavedMovies}
-              element={
-                <>
-                  <Header />
-                  <SearchForm />
-                  <SavedMovies />
-                  <Footer />
-                </>
-              }
-              loggedIn={loggedIn}
-              savedMovies={savedMovies}
-              setSavedMovies={setSavedMovies}
-              handleDeleteMovie={handleDeleteMovie}
-              valueMoviesSaved={valueMoviesSaved}
-              setValueMoviesSaved={setValueMoviesSaved}
-              shortDurationSM={shortDurationSM}
-              setShortDurationSM={setShortDurationSM}
-              isLoading={isLoading}
-              isSavedNotFound={isSavedNotFound}
-              setIsSavedIsNotFound={setIsSavedIsNotFound}
-              isErrorSearch={isErrorSearch}
-              getSavedMovies={getSavedMovies}
-              setErrorMessage={setErrorMessage}
-            />
+                savedResult={savedResult}
+                handleSearch={handleSearchSavedMovies}
+                element={
+                  <>
+                    <Header />
+                    <SearchForm />
+                    <SavedMovies />
+                    <Footer />
+                  </>
+                }
+                loggedIn={loggedIn}
+                savedMovies={savedMovies}
+                setSavedMovies={setSavedMovies}
+                handleDeleteMovie={handleDeleteMovie}
+                valueMoviesSaved={valueMoviesSaved}
+                setValueMoviesSaved={setValueMoviesSaved}
+                shortDurationSM={shortDurationSM}
+                setShortDurationSM={setShortDurationSM}
+                isLoading={isLoading}
+                isSavedNotFound={isSavedNotFound}
+                setIsSavedIsNotFound={setIsSavedIsNotFound}
+                isErrorSearch={isErrorSearch}
+                getSavedMovies={getSavedMovies}
+                setErrorMessage={setErrorMessage}
+              />
             }
           />
 
