@@ -89,7 +89,7 @@ export default function MoviesCardList({
             <InfoTooltip errorText={"Ничего не найдено"} />
           )}
 
-          {isErrorSearch && isNotFound && (
+          {isErrorSearch && (
             <InfoTooltip
               errorText={
                 "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
