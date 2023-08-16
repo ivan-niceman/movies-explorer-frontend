@@ -18,7 +18,11 @@
 
 ---
 
-Адрес репозитория: https://github.com/ivan-niceman/movies-explorer-frontend/tree/level-3
+Ссылка на Pull request: https://github.com/ivan-niceman/movies-explorer-frontend/pulls
+
+Ссылка на ветку level-3: https://github.com/ivan-niceman/movies-explorer-frontend/tree/level-3
+
+Адрес репозитория: https://github.com/ivan-niceman/movies-explorer-frontend
 
 
 IP-адрес 158.160.101.127
