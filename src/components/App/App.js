@@ -336,14 +336,13 @@ export default function App() {
           <Route
             path="/signin"
             element={
-              isLoading ? <Preloader /> :
               <>
                 <Login
                   isActiveFormBtn={isActiveFormBtn}
                   loginUser={loginUser}
                   errorMessage={errorMessage}
                   setErrorMessage={setErrorMessage}
-                  buttonText={isLoading ? "Войти..." : "Войти"}
+                  buttonText={"Войти"}
                 />
               </>
             }
@@ -352,14 +351,11 @@ export default function App() {
           <Route
             path="/signup"
             element={
-              isLoading ? <Preloader /> :
               <Register
                 registerUser={registerUser}
                 errorMessage={errorMessage}
                 setErrorMessage={setErrorMessage}
-                buttonText={
-                  isLoading ? "Зарегистрироваться..." : "Зарегистрироваться"
-                }
+                buttonText={"Зарегистрироваться"}
               />
             }
           />
@@ -408,7 +404,6 @@ export default function App() {
           <Route
             path="/saved-movies"
             element={
-              // isLoading ? <Preloader /> :
               <ProtectedRoute
                 savedResult={savedResult}
                 element={SavedMovies}

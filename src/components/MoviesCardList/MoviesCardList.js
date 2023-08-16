@@ -63,14 +63,6 @@ export default function MoviesCardList({
     <>
       {locationMovies && (
         <>
-          {isErrorSearch && !isLoading && !isNotFound && (
-            <InfoTooltip
-              errorText={
-                "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-              }
-            />
-          )}
-
           {!isErrorSearch && !isLoading && movies.length > 0 && (
             <ul className="movies__card-list">
               {movies.slice(0, shownMovies).map((card, id) => {
@@ -93,8 +85,16 @@ export default function MoviesCardList({
               })}
             </ul>
           )}
-          {!isErrorSearch && !isLoading && movies.length === 0 && (
+          {!isLoading && movies.length === 0 && (
             <InfoTooltip errorText={"Ничего не найдено"} />
+          )}
+
+          {isErrorSearch && isNotFound && (
+            <InfoTooltip
+              errorText={
+                "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+              }
+            />
           )}
           <button
             className={`${
