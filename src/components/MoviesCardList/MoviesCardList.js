@@ -1,6 +1,5 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import Preloader from "../Preloader/Preloader";
 import { useLocation } from "react-router-dom";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import {
@@ -64,10 +63,6 @@ export default function MoviesCardList({
     <>
       {locationMovies && (
         <>
-          {isLoading && <Preloader />}
-          {isNotFound && !isLoading && (
-            <InfoTooltip errorText={"Ничего не найдено"} />
-          )}
           {isErrorSearch && !isLoading && !isNotFound && (
             <InfoTooltip
               errorText={
@@ -76,7 +71,7 @@ export default function MoviesCardList({
             />
           )}
 
-          {!isErrorSearch && !isLoading && (
+          {!isErrorSearch && !isLoading && movies.length > 0 && (
             <ul className="movies__card-list">
               {movies.slice(0, shownMovies).map((card, id) => {
                 return (
@@ -98,6 +93,9 @@ export default function MoviesCardList({
               })}
             </ul>
           )}
+          {!isErrorSearch && !isLoading && movies.length === 0 && (
+            <InfoTooltip errorText={"Ничего не найдено"} />
+          )}
           <button
             className={`${
               movies.length > shownMovies
@@ -112,16 +110,11 @@ export default function MoviesCardList({
       )}
       {locationSavedMovies && (
         <>
-          {isLoading && <Preloader />}
-          {isSavedNotFound && !isLoading && (
-            <InfoTooltip errorText={"Ничего не найдено"} />
-          )}
-
-          {!isLoading && !isSavedNotFound && (
+          {!isLoading && (!isSavedNotFound || movies.length > 0) ? (
             <ul className="movies__card-list">
-              {movies.map((card) => {
+              {movies.map((card, _id) => {
                 return (
-                  <div key={card._id}>
+                  <div key={_id}>
                     <MoviesCard
                       title={card.nameRU}
                       duration={card.duration}
@@ -136,14 +129,12 @@ export default function MoviesCardList({
                 );
               })}
             </ul>
+          ) : ( <InfoTooltip errorText={"Ничего не найдено"} />
           )}
-          <button className={`${
-            (movies.length > shownMovies && locationMovies) ||
-            (locationSavedMovies && isSavedNotFound)
-              ? "button-more-movies"
-              : "button-more-movies_inactive"
-            }` }
-            onClick={showMoreMovies}>Ещё</button>
+          {!isLoading && !isSavedNotFound && movies.length === 0 && (
+            <InfoTooltip errorText={"Ничего не найдено"} />
+          )}
+          <button className={"button-more-movies_inactive"}>Ещё</button>
         </>
       )}
     </>

@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm';
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 export default function SavedMovies({ savedMovies, handleDeleteMovie, handleSearch, savedResult, isShort, isLoading, isSavedNotFound, isErrorSearch, shortDurationSM, setShortDurationSM, getSavedMovies, setIsSavedIsNotFound, valueMoviesSaved, setValueMoviesSaved, }) {
 
@@ -12,7 +14,9 @@ export default function SavedMovies({ savedMovies, handleDeleteMovie, handleSear
     }, []);
 
   return (
-    <section className="movies">
+    <>
+      <Header/>
+      <section className="movies">
       <SearchForm
         onSearch={handleSearch}
         value={valueMoviesSaved}
@@ -30,5 +34,7 @@ export default function SavedMovies({ savedMovies, handleDeleteMovie, handleSear
         isErrorSearch={isErrorSearch}
       />
     </section>
+    <Footer/>
+    </>
   );
 }

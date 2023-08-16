@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ONE_HOUR } from "../../utils/constants";
 
 export default function MoviesCard({ trailerLink, link, title, duration, onLikeClick, savedMovies, card, handleDeleteMovie, handleRemoveMovie }) {
-  const [isCardLiked, setIsCardLiked] = React.useState(false);
+  const [isCardLiked, setIsCardLiked] = useState(false);
   const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isSavedMovie = location.pathname === "/saved-movies";
     if (!isSavedMovie) {
       const result = savedMovies.some((item) => card.id === item.movieId);
@@ -17,11 +17,12 @@ export default function MoviesCard({ trailerLink, link, title, duration, onLikeC
   const handleOnClick = () => {
     if (!isCardLiked) {
       onLikeClick(card);
-      setIsCardLiked(true);
+      setIsCardLiked(isCardLiked);
     } else {
       handleRemoveMovie(card);
-      setIsCardLiked(false);
+      setIsCardLiked(isCardLiked);
     }
+    // setIsCardLiked(!isCardLiked);
   };
 
   const onDeleteClick = () => {
@@ -49,18 +50,18 @@ export default function MoviesCard({ trailerLink, link, title, duration, onLikeC
           <button
           aria-label="лайк"
           type="button"
-          className={`movie__like_${
-            !isCardLiked ? "inactive" : "active"
+          className={`movie__like${
+            !isCardLiked ? "" : "_active"
           }`}
           onClick={handleOnClick}
         />) : ( <button
           aria-label="лайк"
           type="button"
-          className={`movie__like_active`}
+          className="movie__like_delete"
           onClick={onDeleteClick}
         />)}
       </div>
-      <Link to={trailerLink} target="_blank">
+      <Link to={trailerLink} className="movie__link" target="_blank">
         <img src={link} alt={title} className="movie__image" />
       </Link>
     </li>

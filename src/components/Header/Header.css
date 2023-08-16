@@ -1,22 +1,21 @@
-.header {
+.header__block {
   padding: 0 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 74px;
-  max-width: 1280px;
-  /* width: 100%; */
+  max-width: 1140px;
   margin: 0 auto;
 }
 
 @media (max-width: 768px) {
-  .header {
+  .header__block {
     padding: 0 30px;
   }
 }
 
 @media (max-width: 426px) {
-  .header{
+  .header__block{
     padding: 0 14px;
   }
 }

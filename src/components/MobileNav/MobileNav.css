@@ -105,6 +105,10 @@ border-bottom: 1px solid transparent;
   border-bottom: 1px solid #fff;
 }
 
+.mobile-link_active {
+  border-bottom: 1px solid #fff;
+}
+
 .footer-mobile-link {
   display: flex;
     align-items: center;

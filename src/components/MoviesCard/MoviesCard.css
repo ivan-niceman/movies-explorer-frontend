@@ -2,6 +2,7 @@
   display: flex;
   background: #2f2f2f;
   width: 100%;
+  height: 134px;
   justify-content: space-between;
   margin: 0 auto;
   cursor: pointer;
@@ -13,6 +14,7 @@
 
 @media (max-width: 425px) {
   .movie {
+    height: 232px;
     flex-wrap: wrap-reverse;
   }
   .movie:not(:last-of-type) {
@@ -32,7 +34,7 @@
     width: 100%;
     flex-direction: inherit;
     justify-content: space-between;
-    margin: 14px 6px 14px 12px;
+    margin: 14px 16px 14px 12px;
   }
 }
 
@@ -99,16 +101,37 @@
   transition: 0.3s;
 }
 
+.movie__like_delete {
+  background: url(../../images/like-delete.svg) center no-repeat;
+  width: 14px;
+  height: 12px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.movie__link {
+  padding: 6px;
+}
+
+@media (max-width: 425px) {
+  .movie__link {
+    width: 100%;
+    height: 168px;
+    padding: 0;
+  }
+}
+
 .movie__image {
   width: 220px;
+  height: 100%;
   object-fit: cover;
-  margin: 6px;
 }
 
 @media (max-width: 425px) {
   .movie__image {
     width: 100%;
-    height: 168px;
+    /* height: 168px; */
     margin: 0;
   }
 }

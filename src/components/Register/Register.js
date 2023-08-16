@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { emailRegExp } from '../../utils/constants';
 import { useFormValidation } from "../../hooks/useFormValidation";
 
 export default function Register({ registerUser, buttonText, errorMessage, setErrorMessage }) {
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormValidation();
+  const { values, handleChange, errors, isValid, resetForm } = useFormValidation();
+  const [isValueValid, setIsValueValid] = useState(true);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -67,9 +67,12 @@ export default function Register({ registerUser, buttonText, errorMessage, setEr
           <input
             name="password"
             type="password"
-            className="input"
+            className={`input ${errors.password ? "invalid" : ""}`}
             value={values.password || ""}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              setIsValueValid(true);
+            }}
             minLength='2'
             maxLength='30'
             placeholder="Введите пароль"

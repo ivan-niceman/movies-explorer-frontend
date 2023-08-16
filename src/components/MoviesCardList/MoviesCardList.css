@@ -1,3 +1,19 @@
+.movies__card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+@media(max-width: 768px) {
+  .movies__card-list {
+    margin-top: 121px;
+  }
+}
+@media(max-width: 425px) {
+  .movies__card-list {
+    margin-top: 90px;
+    gap: 20px;
+  }
+}
 .button-more-movies {
   display: block;
   margin: 60px auto 80px;

@@ -4,7 +4,6 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from "../Header/Header";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import SearchForm from "../SearchForm/SearchForm";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import { getCards } from "../../utils/MoviesApi";
@@ -13,6 +12,7 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import Error from "../Error/Error";
 import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
+import Preloader from "../Preloader/Preloader";
 import { SHORT_DURATION, CONFLICT_ERROR } from "../../utils/constants";
 import * as MainApi from "../../utils/MainApi";
 
@@ -130,7 +130,7 @@ export default function App() {
     }
     localStorage.setItem(
       "moviesByQuerySavedMovies",
-      JSON.stringify(moviesByQuery),
+      JSON.stringify(moviesByQuery)
     );
     setSavedResult(moviesByQuery);
   }
@@ -187,6 +187,19 @@ export default function App() {
       });
   }
 
+  const handleVisibleChange = () => {
+    if (!document.hidden) {
+      getSavedMovies();
+    }
+  };
+
+  useEffect(() => {
+    handleVisibleChange();
+    return () => {
+      document.addEventListener("visibilitychange", handleVisibleChange);
+    };
+  }, []);
+
   function handleRemoveMovie(movie) {
     const token = localStorage.getItem("token");
     const removeMovie = savedMovies.find((item) => movie.id === item.movieId);
@@ -216,7 +229,7 @@ export default function App() {
         setErrorMessage("Данные обновлены!");
       })
       .catch((err) => {
-        if (err === CONFLICT_ERROR) {
+        if (err.code === CONFLICT_ERROR) {
           setErrorMessage("Пользователь с таким email уже существует");
         } else {
           setErrorMessage("При регистрации пользователя произошла ошибка");
@@ -241,6 +254,7 @@ export default function App() {
   }, [location]);
 
   const registerUser = ({ name, email, password }) => {
+    setIsLoading(true);
     MainApi.register(name, email, password)
       .then((res) => {
         setCurrentUser(res);
@@ -257,6 +271,7 @@ export default function App() {
 
   const loginUser = ({ email, password }) => {
     setIsActiveFormBtn(false);
+    setIsLoading(true);
     MainApi.authorize(email, password)
       .then((data) => {
         localStorage.setItem("token", data.token);
@@ -321,19 +336,23 @@ export default function App() {
           <Route
             path="/signin"
             element={
-              <Login
-                isActiveFormBtn={isActiveFormBtn}
-                loginUser={loginUser}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-                buttonText={isLoading ? "Войти..." : "Войти"}
-              />
+              isLoading ? <Preloader /> :
+              <>
+                <Login
+                  isActiveFormBtn={isActiveFormBtn}
+                  loginUser={loginUser}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  buttonText={isLoading ? "Войти..." : "Войти"}
+                />
+              </>
             }
           />
 
           <Route
             path="/signup"
             element={
+              isLoading ? <Preloader /> :
               <Register
                 registerUser={registerUser}
                 errorMessage={errorMessage}
@@ -348,35 +367,27 @@ export default function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute
-                element={
-                  <>
-                    <Header />
-                    <Profile />
-                  </>
-                }
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-                updateUser={updateUser}
-                loggedIn={loggedIn}
-                logOut={logOut}
-              />
+              <>
+                <Header />
+                <ProtectedRoute
+                  element={Profile}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  updateUser={updateUser}
+                  loggedIn={loggedIn}
+                  logOut={logOut}
+                />
+              </>
             }
           />
 
           <Route
             path="/movies"
             element={
+              isLoading ? <Preloader /> :
               <ProtectedRoute
                 savedMovies={savedMovies}
-                element={
-                  <>
-                    <Header />
-                    <SearchForm />
-                    <Movies />
-                    <Footer />
-                  </>
-                }
+                element={Movies}
                 loggedIn={loggedIn}
                 onLikeClick={handleCardAdd}
                 handleRemoveMovie={handleRemoveMovie}
@@ -397,17 +408,11 @@ export default function App() {
           <Route
             path="/saved-movies"
             element={
+              // isLoading ? <Preloader /> :
               <ProtectedRoute
                 savedResult={savedResult}
+                element={SavedMovies}
                 handleSearch={handleSearchSavedMovies}
-                element={
-                  <>
-                    <Header />
-                    <SearchForm />
-                    <SavedMovies />
-                    <Footer />
-                  </>
-                }
                 loggedIn={loggedIn}
                 savedMovies={savedMovies}
                 setSavedMovies={setSavedMovies}

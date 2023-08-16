@@ -4,6 +4,10 @@ import MobileNav from "../MobileNav/MobileNav";
 
 export default function Header({ loggedIn }) {
   const location = useLocation();
+  const headerStyle = {
+    backgroundColor:
+      location.pathname === "/" ? "#073042" : null,
+  };
   return (
     <>
       {location.pathname === "/" && !loggedIn ? (
@@ -24,22 +28,24 @@ export default function Header({ loggedIn }) {
         </div>
         </header>
       ) : (
-        <header className="header" style={{background: '#073042'}}>
-          <Link to="/">
-            <img src={logo} alt="логотип" className="header__logo" />
-          </Link>
-          <MobileNav />
-          <nav className="header__nav">
-            <Link to="/movies" className="header__link-movies">
-              Фильмы
+        <header className="header" style={headerStyle}>
+          <div className="header__block">
+            <Link to="/">
+              <img src={logo} alt="логотип" className="header__logo" />
             </Link>
-            <Link to="/saved-movies" className="header__link-save-movies">
-              Сохранённые фильмы
-            </Link>
-            <Link to="/profile" className="header__link-account">
-              Аккаунт
-            </Link>
-          </nav>
+            <MobileNav />
+            <nav className="header__nav">
+              <Link to="/movies" className="header__link-movies">
+                Фильмы
+              </Link>
+              <Link to="/saved-movies" className="header__link-save-movies">
+                Сохранённые фильмы
+              </Link>
+              <Link to="/profile" className="header__link-account">
+                Аккаунт
+              </Link>
+            </nav>
+          </div>
         </header>
       )}
     </>

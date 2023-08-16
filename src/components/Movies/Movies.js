@@ -1,11 +1,15 @@
 import React from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 export default function Movies({ onLikeClick, savedMovies, handleRemoveMovie, isErrorSearch, handleSearch, isNotFound, valueMovies, isLoading, cards, shortDuration, setShortDuration, setValueMovies }) {
 
   return (
-    <section className="movies">
+    <>
+      <Header />
+      <section className="movies">
       <SearchForm
         setValue={setValueMovies}
         onSearch={handleSearch}
@@ -13,7 +17,7 @@ export default function Movies({ onLikeClick, savedMovies, handleRemoveMovie, is
         isChecked={shortDuration}
         setIsChecked={setShortDuration}
       />
-      <MoviesCardList 
+      <MoviesCardList
         movies={JSON.parse(localStorage.getItem("moviesByQuery")) || cards}
         isLoading={isLoading}
         isNotFound={isNotFound}
@@ -23,5 +27,7 @@ export default function Movies({ onLikeClick, savedMovies, handleRemoveMovie, is
         handleRemoveMovie={handleRemoveMovie}
       />
     </section>
+    <Footer />
+    </>
   )
 }

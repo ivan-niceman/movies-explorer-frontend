@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-export default function SearchForm({ onSearch, value, setValue, isChecked, setIsChecked }) {
+export default function SearchForm({
+  onSearch,
+  value,
+  setValue,
+  isChecked,
+  setIsChecked,
+  isSavedNotFound,
+}) {
   const [valueError, setValueError] = useState(false);
   const location = useLocation();
   const locationSavedMovies = location.pathname === "/saved-movies";
@@ -37,15 +44,20 @@ export default function SearchForm({ onSearch, value, setValue, isChecked, setIs
   return (
     <section className="search-block">
       <form onSubmit={handleSubmit} name="search" className="search-form">
-        <input
-          name="search"
-          type="search"
-          value={value}
-          onChange={handleChange}
-          className="search-form__input"
-          placeholder="Фильм"
-        />
-        <button type='submit' className="search-form__btn" />
+        <div className="search-form__block">
+          <input
+            name="search"
+            type="search"
+            value={value}
+            onChange={handleChange}
+            className="search-form__input"
+            placeholder="Фильм"
+          />
+          <button type="submit" className="search-form__btn" />
+          {valueError && (
+            <span className="input-error">Введите ключевое слово</span>
+          )}
+        </div>
         <div className="switch">
           <input
             type="checkbox"
@@ -53,12 +65,10 @@ export default function SearchForm({ onSearch, value, setValue, isChecked, setIs
             className="switch-input"
             onChange={handleCheckboxChange}
             checked={isChecked}
-            defaultChecked
           />
           <label htmlFor="switch" className="switch-label" />
           <p className="switch-text">Короткометражки</p>
         </div>
-        {valueError && ( <span className="input-error">Введите ключевое слово</span> )}
       </form>
     </section>
   );
