@@ -3,17 +3,11 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { useLocation } from "react-router-dom";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import Preloader from "../Preloader/Preloader";
-import {
-  WINDOW_DESCTOP_S,
-  WINDOW_TABLE_M,
-  WINDOW_TABLE_S,
-  BASE_URL,
-} from "../../utils/constants";
+import { BASE_URL } from "../../utils/constants";
 
 export default function MoviesCardList({
   movies,
   isLoading,
-  isErrorSearch,
   onLikeClick,
   savedMovies,
   handleDeleteMovie,
@@ -27,13 +21,13 @@ export default function MoviesCardList({
 
   function displayMovies() {
     const display = window.innerWidth;
-    if (display > WINDOW_DESCTOP_S) {
+    if (display > 1279) {
       setShownMovies(16);
-    } else if (display > WINDOW_TABLE_M) {
+    } else if (display > 989) {
       setShownMovies(12);
-    } else if (display > WINDOW_TABLE_S) {
+    } else if (display > 629) {
       setShownMovies(8);
-    } else if (display < WINDOW_TABLE_S) {
+    } else if (display < 629) {
       setShownMovies(5);
     }
   }
@@ -43,18 +37,22 @@ export default function MoviesCardList({
   }, []);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      window.addEventListener("resize", displayMovies);
-    }, 500);
-  });
+    const handleResize = () => {
+      displayMovies();
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   function showMoreMovies() {
     const display = window.innerWidth;
-    if (display > WINDOW_DESCTOP_S) {
+    if (display > 1279) {
       setShownMovies(shownMovies + 4);
-    } else if (display > WINDOW_TABLE_M) {
+    } else if (display > 989) {
       setShownMovies(shownMovies + 3);
-    } else if (display < WINDOW_TABLE_M) {
+    } else if (display < 989) {
       setShownMovies(shownMovies + 2);
     }
   }
@@ -65,9 +63,9 @@ export default function MoviesCardList({
         <>
           {isLoading && <Preloader />}
           <ul className="movies__card-list">
-            {movies.slice(0, shownMovies).map((card, id) => {
+            {movies.slice(0, shownMovies).map((card) => {
               return (
-                <div key={id}>
+                <div key={card.id}>
                   <MoviesCard
                     title={card.nameRU || card.nameEN}
                     duration={card.duration}
@@ -123,7 +121,16 @@ export default function MoviesCardList({
             </ul>
           )}
           {isSavedNotFound && <InfoTooltip errorText={"Ничего не найдено"} />}
-          <button className={"button-more-movies_inactive"}>Ещё</button>
+          <button
+            className={`${
+              movies.length > shownMovies
+                ? "button-more-movies"
+                : "button-more-movies_inactive"
+            }`}
+            onClick={showMoreMovies}
+          >
+            Ещё
+          </button>
         </>
       )}
     </>

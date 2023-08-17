@@ -18,7 +18,7 @@
 
 ---
 
-Ссылка на Pull request: https://github.com/ivan-niceman/movies-explorer-frontend/pulls
+Ссылка на Pull request: https://github.com/ivan-niceman/movies-explorer-frontend/pull/5
 
 Адрес репозитория: https://github.com/ivan-niceman/movies-explorer-frontend
 

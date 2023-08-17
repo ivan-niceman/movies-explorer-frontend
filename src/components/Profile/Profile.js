@@ -118,7 +118,7 @@ export default function Profile({
             Редактировать
           </button>
         )}
-        <Link to="/signin" className="profile__logout" onClick={logOut}>
+        <Link to="/" className="profile__logout" onClick={logOut}>
           Выйти из аккаунта
         </Link>
       </div>

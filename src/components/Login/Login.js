@@ -15,11 +15,8 @@ function handleSubmit(e) {
     password: values.password,
   });
   setErrorMessage("");
-}
-
-React.useEffect(() => {
   resetForm();
-}, [resetForm]);
+}
 
   return (
     <section className="ident ident-login">

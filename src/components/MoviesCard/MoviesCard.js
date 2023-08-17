@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ONE_HOUR } from "../../utils/constants";
 
 export default function MoviesCard({ trailerLink, link, title, duration, onLikeClick, savedMovies, card, handleDeleteMovie, handleRemoveMovie }) {
   const [isCardLiked, setIsCardLiked] = useState(false);
@@ -22,7 +21,6 @@ export default function MoviesCard({ trailerLink, link, title, duration, onLikeC
       handleRemoveMovie(card);
       setIsCardLiked(isCardLiked);
     }
-    // setIsCardLiked(!isCardLiked);
   };
 
   const onDeleteClick = () => {
@@ -30,8 +28,8 @@ export default function MoviesCard({ trailerLink, link, title, duration, onLikeC
   };
 
   function transformDuration(duration) {
-    const hours = Math.floor(duration / ONE_HOUR);
-    const minutes = duration % ONE_HOUR;
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
     if (hours === 0) {
       return `${minutes}м`;
     } else {

@@ -11,8 +11,7 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import Error from "../Error/Error";
-import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
-import { SHORT_DURATION, CONFLICT_ERROR } from "../../utils/constants";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import * as MainApi from "../../utils/MainApi";
 
 export default function App() {
@@ -41,16 +40,12 @@ export default function App() {
   const [valueMoviesSaved, setValueMoviesSaved] = useState("");
 
   useEffect(() => {
-    if (
-      (!loggedIn && path === "/movies") ||
-      path === "/saved-movies" ||
-      path === "/profile" ||
-      path === "/signup" ||
-      path === "/signin"
-    ) {
+    if (!loggedIn && (path === "/movies" || path === "/saved-movies" || path === "/profile")) {
+      navigate("/");
+    } else if(loggedIn && (path === "/signin" || path === "/signup")) {
       navigate("/");
     }
-  }, []);
+  }, [loggedIn, path]);
 
   useEffect(() => {
     handleAllMovies();
@@ -84,7 +79,7 @@ export default function App() {
         .toLowerCase()
         .trim()
         .includes(valueMovies.toLowerCase());
-      const isShort = movie.duration <= SHORT_DURATION;
+      const isShort = movie.duration <= 40;
       if (valueMovies === "") {
         return 0;
       }
@@ -115,7 +110,7 @@ export default function App() {
         .toLowerCase()
         .trim()
         .includes(valueMoviesSaved.toLowerCase());
-      const isMovieShort = movie.duration <= SHORT_DURATION;
+      const isMovieShort = movie.duration <= 40;
       if (shortDurationSM) {
         return (movieRu || movieEn) && isMovieShort;
       } else {
@@ -228,7 +223,7 @@ export default function App() {
         setErrorMessage("Данные обновлены!");
       })
       .catch((err) => {
-        if (err.code === CONFLICT_ERROR) {
+        if (err.code === 409) {
           setErrorMessage("Пользователь с таким email уже существует");
         } else {
           setErrorMessage("При регистрации пользователя произошла ошибка");
@@ -260,7 +255,7 @@ export default function App() {
         return loginUser({ email, password });
       })
       .catch((err) => {
-        if (err === CONFLICT_ERROR) {
+        if (err === 409) {
           setErrorMessage("Пользователь с таким email уже существует");
         } else {
           setErrorMessage("При регистрации пользователя произошла ошибка");
