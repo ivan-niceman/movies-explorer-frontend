@@ -16,8 +16,7 @@ export default function Header({ loggedIn }) {
           <Link to="/">
             <img src={logo} alt="логотип" className="header-promo-logo" />
           </Link>
-          <MobileNav />
-          <span className="header-enter_disable">
+          <span>
             <Link to="/signup" className="header-promo-ident-register">
               Регистрация
             </Link>

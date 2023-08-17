@@ -12,7 +12,7 @@ import {
 export default function MoviesCardList({
   movies,
   isLoading,
-  isNotFound,
+  // isNotFound,
   isErrorSearch,
   onLikeClick,
   savedMovies,
@@ -63,7 +63,6 @@ export default function MoviesCardList({
     <>
       {locationMovies && (
         <>
-          {!isErrorSearch && !isLoading && movies.length > 0 && (
             <ul className="movies__card-list">
               {movies.slice(0, shownMovies).map((card, id) => {
                 return (
@@ -84,12 +83,11 @@ export default function MoviesCardList({
                 );
               })}
             </ul>
-          )}
-          {!isLoading && movies.length === 0 && (
+          {isErrorSearch && movies.length === 0 && (
             <InfoTooltip errorText={"Ничего не найдено"} />
           )}
 
-          {isErrorSearch && (
+          {!isLoading && !isErrorSearch && (
             <InfoTooltip
               errorText={
                 "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
@@ -110,7 +108,7 @@ export default function MoviesCardList({
       )}
       {locationSavedMovies && (
         <>
-          {!isLoading && (!isSavedNotFound || movies.length > 0) ? (
+          {!isLoading && (!isSavedNotFound || movies.length > 0) && (
             <ul className="movies__card-list">
               {movies.map((card, _id) => {
                 return (
@@ -129,9 +127,8 @@ export default function MoviesCardList({
                 );
               })}
             </ul>
-          ) : ( <InfoTooltip errorText={"Ничего не найдено"} />
           )}
-          {!isLoading && !isSavedNotFound && movies.length === 0 && (
+          {isSavedNotFound && (
             <InfoTooltip errorText={"Ничего не найдено"} />
           )}
           <button className={"button-more-movies_inactive"}>Ещё</button>
