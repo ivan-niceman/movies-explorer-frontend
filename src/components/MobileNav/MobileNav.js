@@ -50,7 +50,7 @@ export default function MobileNav() {
             Сохранённые фильмы
           </Link>
         </nav>
-        <Link to="/signin" className="footer-mobile-link">
+        <Link to="/profile" className="footer-mobile-link">
           Аккаунт
         </Link>
       </div>

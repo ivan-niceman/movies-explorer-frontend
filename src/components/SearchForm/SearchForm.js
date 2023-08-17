@@ -7,7 +7,6 @@ export default function SearchForm({
   setValue,
   isChecked,
   setIsChecked,
-  isSavedNotFound,
 }) {
   const [valueError, setValueError] = useState(false);
   const location = useLocation();
@@ -54,10 +53,10 @@ export default function SearchForm({
             placeholder="Фильм"
           />
           <button type="submit" className="search-form__btn" />
-          {valueError && (
+        </div>
+        {valueError && (
             <span className="input-error">Введите ключевое слово</span>
           )}
-        </div>
         <div className="switch">
           <input
             type="checkbox"

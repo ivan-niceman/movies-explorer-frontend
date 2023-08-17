@@ -2,6 +2,7 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { useLocation } from "react-router-dom";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import Preloader from "../Preloader/Preloader";
 import {
   WINDOW_DESCTOP_S,
   WINDOW_TABLE_M,
@@ -12,7 +13,6 @@ import {
 export default function MoviesCardList({
   movies,
   isLoading,
-  // isNotFound,
   isErrorSearch,
   onLikeClick,
   savedMovies,
@@ -21,7 +21,7 @@ export default function MoviesCardList({
   isSavedNotFound,
 }) {
   const [shownMovies, setShownMovies] = React.useState(0);
-  const location = useLocation();
+  const location = useLocation([]);
   const locationMovies = location.pathname === "/movies";
   const locationSavedMovies = location.pathname === "/saved-movies";
 
@@ -63,36 +63,29 @@ export default function MoviesCardList({
     <>
       {locationMovies && (
         <>
-            <ul className="movies__card-list">
-              {movies.slice(0, shownMovies).map((card, id) => {
-                return (
-                  <div key={id}>
-                    <MoviesCard
-                      title={card.nameRU || card.nameEN}
-                      duration={card.duration}
-                      link={`${BASE_URL}${card.image.url}` || card.image}
-                      isLiked={card.isLiked}
-                      trailerLink={card.trailerLink}
-                      onLikeClick={() => onLikeClick(card)}
-                      card={card}
-                      savedMovies={savedMovies}
-                      handleRemoveMovie={handleRemoveMovie}
-                      handleDeleteMovie={handleDeleteMovie}
-                    />
-                  </div>
-                );
-              })}
-            </ul>
-          {isErrorSearch && movies.length === 0 && (
+          {isLoading && <Preloader />}
+          <ul className="movies__card-list">
+            {movies.slice(0, shownMovies).map((card, id) => {
+              return (
+                <div key={id}>
+                  <MoviesCard
+                    title={card.nameRU || card.nameEN}
+                    duration={card.duration}
+                    link={`${BASE_URL}${card.image.url}` || card.image}
+                    isLiked={card.isLiked}
+                    trailerLink={card.trailerLink}
+                    onLikeClick={() => onLikeClick(card)}
+                    card={card}
+                    savedMovies={savedMovies}
+                    handleRemoveMovie={handleRemoveMovie}
+                    handleDeleteMovie={handleDeleteMovie}
+                  />
+                </div>
+              );
+            })}
+          </ul>
+          {!isLoading && movies.length === 0 && (
             <InfoTooltip errorText={"Ничего не найдено"} />
-          )}
-
-          {!isLoading && !isErrorSearch && (
-            <InfoTooltip
-              errorText={
-                "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-              }
-            />
           )}
           <button
             className={`${
@@ -108,6 +101,7 @@ export default function MoviesCardList({
       )}
       {locationSavedMovies && (
         <>
+          {isLoading && <Preloader />}
           {!isLoading && (!isSavedNotFound || movies.length > 0) && (
             <ul className="movies__card-list">
               {movies.map((card, _id) => {
@@ -128,9 +122,7 @@ export default function MoviesCardList({
               })}
             </ul>
           )}
-          {isSavedNotFound && (
-            <InfoTooltip errorText={"Ничего не найдено"} />
-          )}
+          {isSavedNotFound && <InfoTooltip errorText={"Ничего не найдено"} />}
           <button className={"button-more-movies_inactive"}>Ещё</button>
         </>
       )}

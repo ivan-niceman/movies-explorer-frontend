@@ -17,7 +17,7 @@
 @media (max-width: 768px) {
   .ident-login {
     justify-content: center;
-    transform: translateY(-137px);
+    transform: translateY(-130px);
   }
 }
 
@@ -68,20 +68,14 @@
 }
 
 .login-section-button {
-  transform: translateY(205px);
+  transform: translateY(190px);
 }
 @media(max-width: 425px) {
   .login-section-button {
     margin: 47px 0 0;
-    transform: translateY(246px);
+    transform: translateY(230px);
   }
 }
-
-/* @media(max-width: 425px) {
-  .ident__section__button {
-    margin: 50px 0 30px;
-  }
-} */
 
 .ident__button {
   border-radius: 3px;
@@ -94,6 +88,12 @@
   line-height: normal;
   padding: 15px 0;
   cursor: pointer;
+}
+
+@media(max-width: 425px) {
+  .ident__button {
+    font-size: 12px;
+  }
 }
 
 .ident__button_disabled {

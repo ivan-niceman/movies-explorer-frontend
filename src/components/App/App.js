@@ -12,7 +12,6 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import Error from "../Error/Error";
 import ProtectedRoute from "../../utils/ProtectedRoute/ProtectedRoute";
-import Preloader from "../Preloader/Preloader";
 import { SHORT_DURATION, CONFLICT_ERROR } from "../../utils/constants";
 import * as MainApi from "../../utils/MainApi";
 
@@ -380,7 +379,6 @@ export default function App() {
           <Route
             path="/movies"
             element={
-              isLoading ? <Preloader /> :
               <ProtectedRoute
                 savedMovies={savedMovies}
                 element={Movies}
