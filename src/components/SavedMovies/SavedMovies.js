@@ -1,17 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-export default function SavedMovies({ savedMovies, handleDeleteMovie, handleSearch, savedResult, isShort, isLoading, isSavedNotFound, isErrorSearch, shortDurationSM, setShortDurationSM, getSavedMovies, setIsSavedIsNotFound, valueMoviesSaved, setValueMoviesSaved, }) {
-
-    useEffect(() => {
-      getSavedMovies();
-      setValueMoviesSaved("");
-      setShortDurationSM(false);
-      setIsSavedIsNotFound(false);
-    }, []);
+export default function SavedMovies({ savedMovies, handleDeleteMovie, handleSearch, savedResult, isShort, isLoading, isSavedNotFound, isErrorSearch, shortDurationSM, setShortDurationSM, valueMoviesSaved, setValueMoviesSaved, }) {
 
   return (
     <>

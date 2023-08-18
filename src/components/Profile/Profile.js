@@ -54,6 +54,10 @@ export default function Profile({
     setUpdatedName(values.name || currentUser.name);
   }, [values.name, currentUser.name]);
 
+  const isDataChanged =
+  values.name !== currentUser.name ||
+  values.email !== currentUser.email;
+
 
   return (
     <section className="profile">
@@ -105,7 +109,8 @@ export default function Profile({
           <button
             type="submit"
             className="profile__edit"
-            disabled={!isValid}
+            style={isDataChanged ? {} : { opacity: 0.5, cursor: 'default' }}
+            disabled={!isValid || !isDataChanged}
           >
             Сохранить
           </button>

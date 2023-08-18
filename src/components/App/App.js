@@ -182,7 +182,7 @@ export default function App() {
   }
 
   const handleVisibleChange = () => {
-    if (!document.hidden) {
+    if (!document.hidden && loggedIn) {
       getSavedMovies();
     }
   };
@@ -270,10 +270,18 @@ export default function App() {
       .then((data) => {
         localStorage.setItem("token", data.token);
         setLoggedIn(true);
-        setCurrentUser(data);
+        // setCurrentUser(data);
         navigate("/movies", { replace: true });
         getSavedMovies();
-        setIsActiveFormBtn(true);
+        // setIsActiveFormBtn(true);
+        MainApi.getUserData(data.token)
+        .then((user) => {
+          setCurrentUser(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        // getSavedMovies();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -299,18 +307,18 @@ export default function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (loggedIn) {
-      const token = localStorage.getItem("token");
-      MainApi.getUserData(token)
-        .then((user) => {
-          setCurrentUser(user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     const token = localStorage.getItem("token");
+  //     MainApi.getUserData(token)
+  //       .then((user) => {
+  //         setCurrentUser(user);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, [loggedIn]);
 
   return (
     <div className="App">
