@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React from "react";
 
 export default function MobileNav() {
+  const location = useLocation();
+
   React.useEffect(() => {
     const buttonBurger = document.querySelector(".burger-menu");
     const menuMobile = document.querySelector(".mobile-menu");
@@ -38,17 +40,17 @@ export default function MobileNav() {
       <div className="mobile-menu">
         <div className="mobile-close-button" />
         <nav className="mobile-nav">
-          <Link to="/" className="mobile-link">
+          <Link to="/" className={`mobile-link${location.pathname === "/" ? " mobile-link_active" : ""}`}>
             Главная
           </Link>
-          <Link to="#" className="mobile-link">
+          <Link to="/movies" className={`mobile-link${location.pathname === "/movies" ? " mobile-link_active" : ""}`}>
             Фильмы
           </Link>
-          <Link to="#" className="mobile-link">
+          <Link to="/saved-movies" className={`mobile-link${location.pathname === "/saved-movies" ? " mobile-link_active" : ""}`}>
             Сохранённые фильмы
           </Link>
         </nav>
-        <Link to="#" className="footer-mobile-link">
+        <Link to="/profile" className="footer-mobile-link">
           Аккаунт
         </Link>
       </div>

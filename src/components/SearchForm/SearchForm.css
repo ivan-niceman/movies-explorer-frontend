@@ -1,24 +1,26 @@
 .search-block {
   max-width: 1280px;
-  padding: 0 70px;
-  margin: 70px auto 0;
+  margin: 70px auto 48px;
 }
 
 @media (max-width: 768px) {
   .search-block {
-    padding: 0 30px;
     margin: 79px auto 0;
   }
 }
 
 @media (max-width: 425px) {
   .search-block {
-    padding: 0 14px;
     margin: 84px auto 0;
   }
 }
 
 .search-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form__block {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #424242;
@@ -26,7 +28,7 @@
 }
 
 @media (max-width: 425px) {
-  .search-form {
+  .search-form__block {
     padding: 0 0 9px;
   }
 }

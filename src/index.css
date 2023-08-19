@@ -33,6 +33,8 @@
 
 @import url(./components/Preloader/Preloader.css);
 
+@import url(./components/InfoTooltip/InfoTooltip.css);
+
 .page {
   width: 100%;
   min-width: 320px;
@@ -76,6 +78,10 @@
   font-size: 14px;
   padding: 0 0 10px;
   border-bottom: 1px solid #424242;
+}
+
+.input.invalid {
+  color: #EE3465;
 }
 
 .input::placeholder {

@@ -10,10 +10,10 @@
   }
 }
 .register-section-button {
-  transform: translateY(135px);
+  transform: translateY(120px);
 }
 @media(max-width: 320px) {
   .register-section-button {
-    transform: translateY(222px);
+    transform: translateY(208px);
   }
 }

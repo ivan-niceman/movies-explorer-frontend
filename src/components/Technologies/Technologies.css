@@ -1,5 +1,5 @@
 .technologies {
-  max-width: 100%;
+  margin: 0 auto;
   background: #272727;
   padding: 100px 0;
 }
@@ -16,7 +16,7 @@
   }
 }
 
-.technilogies__width {
+.technologies__width {
   max-width: 1280px;
   margin: 0 auto;
 }
