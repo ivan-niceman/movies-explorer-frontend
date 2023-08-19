@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Error() {
+  let navigate = useNavigate();
+
   function handleGoBack() {
-    window.history.back();
+    navigate(-1);
   }
 
   return (

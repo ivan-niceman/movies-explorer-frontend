@@ -48,11 +48,20 @@ export default function App() {
   }, [loggedIn, path]);
 
   useEffect(() => {
-    handleAllMovies();
-  }, []);
+    if (loggedIn) {
+      handleAllMovies();
+    }
+  }, [loggedIn]);
 
   function handleAllMovies() {
     setIsLoading(true);
+    const cachedAllMovies = JSON.parse(localStorage.getItem("allMovies"));
+
+    if (cachedAllMovies) {
+      setIsAllMovies(cachedAllMovies);
+      setIsLoading(false);
+      return;
+    }
     return getCards()
       .then((res) => {
         setIsAllMovies(res);
@@ -66,6 +75,7 @@ export default function App() {
         setIsLoading(false);
       });
   }
+
 
   function handleSearch(valueMovies, shortDuration) {
     localStorage.setItem("shortDuration", JSON.stringify(shortDuration));
@@ -166,6 +176,13 @@ export default function App() {
   function getSavedMovies() {
     setIsLoading(true);
     const token = localStorage.getItem("token");
+    const cachedAllMovies = JSON.parse(localStorage.getItem("allMovies"));
+
+    if (cachedAllMovies) {
+      setIsAllMovies(cachedAllMovies);
+      setIsLoading(false);
+      return;
+    }
     return MainApi.getSavedMovies(token)
       .then((res) => {
         setSavedMovies(res);
@@ -263,25 +280,55 @@ export default function App() {
       });
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+      navigate(location);
+
+      const cachedUserData = JSON.parse(localStorage.getItem("userData"));
+      if (cachedUserData) {
+        setCurrentUser(cachedUserData);
+      } else {
+        MainApi.getUserData(token)
+          .then((user) => {
+            setCurrentUser(user);
+            localStorage.setItem("userData", JSON.stringify(user));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+  }, []);
+
   const loginUser = ({ email, password }) => {
     setIsActiveFormBtn(false);
     setIsLoading(true);
     MainApi.authorize(email, password)
       .then((data) => {
         localStorage.setItem("token", data.token);
-        setLoggedIn(true);
-        // setCurrentUser(data);
-        navigate("/movies", { replace: true });
-        getSavedMovies();
-        // setIsActiveFormBtn(true);
-        MainApi.getUserData(data.token)
-        .then((user) => {
-          setCurrentUser(user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        // getSavedMovies();
+        const cachedUserData = JSON.parse(localStorage.getItem("userData"));
+        if (cachedUserData) {
+          setCurrentUser(cachedUserData);
+          setLoggedIn(true);
+          navigate("/movies", { replace: true });
+          getSavedMovies();
+        } else {
+          MainApi.getUserData(data.token)
+            .then((user) => {
+              setCurrentUser(user);
+              localStorage.setItem("userData", JSON.stringify(user));
+              setLoggedIn(true);
+              navigate("/movies", { replace: true });
+              getSavedMovies();
+            })
+            .catch((err) => {
+              console.log(err);
+              setIsActiveFormBtn(true);
+              setErrorMessage("Ошибка при загрузке данных пользователя");
+            });
+        }
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -289,36 +336,6 @@ export default function App() {
         setIsActiveFormBtn(true);
       });
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      MainApi.getUserData(token)
-        .then((user) => {
-          if (user) {
-            setCurrentUser(user);
-            setLoggedIn(true);
-            navigate(location);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     const token = localStorage.getItem("token");
-  //     MainApi.getUserData(token)
-  //       .then((user) => {
-  //         setCurrentUser(user);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [loggedIn]);
 
   return (
     <div className="App">
